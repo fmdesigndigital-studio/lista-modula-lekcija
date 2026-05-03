@@ -133,7 +133,6 @@
             font-size: 14px;
         }
 
-        /* Klasa za otvoreni modul */
         .module.open .arrow {
             transform: rotate(180deg);
         }
@@ -143,27 +142,37 @@
         }
 
         .module-content {
-            display: none; /* Skriveno po automatizmu */
+            display: none;
             padding: 10px 20px 20px 50px;
             border-top: 1px solid var(--module-border);
         }
 
-        /* Lekcije */
-        .lesson {
+        /* -------------------------------------
+           Redovi sa Lekcijama i Akcijama
+           ------------------------------------- */
+        .lesson-row {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
+            justify-content: space-between;
             padding: 10px 0;
-            cursor: pointer;
             border-bottom: 1px solid #f0f0f0;
-            transition: opacity 0.2s;
+            transition: background-color 0.2s;
         }
 
-        .lesson:last-child {
+        .lesson-row:last-child {
             border-bottom: none;
         }
 
-        .lesson:hover {
-            opacity: 0.8;
+        .lesson-row:hover {
+            background-color: #fcfcfd;
+        }
+
+        .lesson {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+            flex: 1;
+            padding-right: 15px;
         }
 
         .lesson-text {
@@ -171,6 +180,29 @@
             font-size: 15px;
             color: #444;
             user-select: none;
+            padding-top: 1px;
+        }
+
+        .lesson-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        .action-label-compact {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .action-text {
+            font-size: 11px;
+            font-weight: bold;
+            color: #8c98a4;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         /* Prilagođeni Checkboxovi (Zajednički stilovi) */
@@ -223,7 +255,7 @@
             height: 20px;
             border: 2px solid #ced4da;
             border-radius: 4px;
-            margin-top: 2px;
+            margin-top: 1px;
         }
 
         .lesson-checkbox:checked {
@@ -241,116 +273,70 @@
             height: 12px;
         }
 
-        /* -------------------------------------
-           NOVO: Modul Footer - Arhiva i Status
-           ------------------------------------- */
-        .module-footer {
-            display: flex;
-            justify-content: center; /* Centrirano kao na slici */
-            gap: 60px;
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 1px dashed #dcdcdc;
-            flex-wrap: wrap;
-        }
-
-        .action-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .action-header {
-            font-size: 13px;
-            font-weight: bold;
-            color: #8c98a4;
-            letter-spacing: 2px;
-            display: flex;
-            flex-direction: column; /* Ikonica iznad teksta */
-            align-items: center;
-            gap: 8px;
-            text-transform: uppercase;
-        }
-
-        .action-header svg {
-            width: 22px;
-            height: 22px;
-            color: #8c98a4;
-        }
-
-        .custom-toggle {
-            display: block;
-        }
-        
-        /* Skrivamo globalni checkbox stil samo za ove specifične tastere */
+        /* Skrivanje globalnog checkboxa za Arhivu i Status */
         .custom-toggle input[type="checkbox"] {
             display: none !important; 
         }
 
-        /* ARHIVA Dugme dizajn (Prema slici) */
-        .archive-ui {
-            width: 70px;
-            height: 70px;
-            border-radius: 18px;
-            background-color: #f4f5fa; /* Svetlo ljubičasta kao na slici */
-            border: none;
+        /* ARHIVA Kompaktno Dugme */
+        .archive-ui-compact {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background-color: #f1f3f5;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 15px rgba(90, 75, 218, 0.1);
         }
 
-        .archive-ui .check-icon {
-            width: 32px;
-            height: 32px;
-            color: var(--archive-color); /* Ljubičasta ikonica */
+        .archive-ui-compact .check-icon {
+            width: 18px;
+            height: 18px;
+            color: #cbd5e0;
             transition: all 0.2s ease;
         }
 
-        /* ARHIVA Neaktivno stanje */
-        .custom-toggle input:not(:checked) + .archive-ui {
-            background-color: #f1f3f5;
-            box-shadow: none;
+        .custom-toggle input:checked + .archive-ui-compact {
+            background-color: #f4f5fa;
+            box-shadow: 0 2px 6px rgba(90, 75, 218, 0.15);
         }
 
-        .custom-toggle input:not(:checked) + .archive-ui .check-icon {
-            color: #cbd5e0;
+        .custom-toggle input:checked + .archive-ui-compact .check-icon {
+            color: var(--archive-color);
         }
 
-        /* STATUS Dugme dizajn (Prema slici) */
-        .status-ui {
-            padding: 0 24px;
-            border-radius: 12px;
+        /* STATUS Kompaktno Dugme */
+        .status-ui-compact {
+            padding: 0 10px;
+            border-radius: 6px;
             background-color: #f1f3f5;
             color: #adb5bd;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 11px;
             cursor: pointer;
             transition: all 0.2s ease;
             text-transform: uppercase;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 140px;
-            height: 50px;
+            min-width: 85px;
+            height: 30px;
         }
 
-        .status-ui::after {
+        .status-ui-compact::after {
             content: "U TOKU";
         }
 
-        /* STATUS Aktivno stanje */
-        .custom-toggle input:checked + .status-ui {
+        .custom-toggle input:checked + .status-ui-compact {
             background-color: var(--status-success);
             color: white;
-            box-shadow: 0 4px 12px rgba(31, 199, 124, 0.3);
+            box-shadow: 0 2px 6px rgba(31, 199, 124, 0.2);
             border-color: var(--status-success);
         }
 
-        .custom-toggle input:checked + .status-ui::after {
+        .custom-toggle input:checked + .status-ui-compact::after {
             content: "ZAVRŠENO";
         }
 
@@ -446,10 +432,22 @@
             color: #fff;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .container { padding: 15px; }
-            .module-content { padding-left: 20px; }
-            .module-footer { gap: 20px; justify-content: space-around; }
+            .module-content { padding-left: 15px; padding-right: 15px; }
+            
+            /* Prilagođavanje na mobilnom */
+            .lesson-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 15px 0;
+            }
+            .lesson-actions {
+                margin-left: 32px; /* Ravnanje sa tekstom lekcije */
+                width: calc(100% - 32px);
+                justify-content: flex-start;
+            }
         }
     </style>
 </head>
@@ -479,40 +477,18 @@
             <div class="arrow">▼</div>
         </div>
         <div class="module-content">
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0101"><span class="lesson-text">0101 Kako napraviti dobru reklamu: Uvod</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0102"><span class="lesson-text">0102 UAVE - tajni metod Istoka Pavlovića za savršenu reklamu</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0103"><span class="lesson-text">0103 Primer: Butik Reels Masterclass</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0104"><span class="lesson-text">0104 Sparrow reklama koja je zaradila milion evra</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0105"><span class="lesson-text">0105 Jeat Meals: 200% povećana cela firma zbog jednog videa</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0106"><span class="lesson-text">0106 B Card: Hiljadu novih B2B klijenata od jednog videa</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0107"><span class="lesson-text">0107 Dijalog video doneo 220.000 evra prometa</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0108"><span class="lesson-text">0108 Zlatna haljina: vizuelni dokaz doneo 236.000 evra</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0109"><span class="lesson-text">0109 Vizuelni dokaz - najvažniji princip pored unikatnog ugla</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0110"><span class="lesson-text">0110 Kako početi video: Bilbord test</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0111"><span class="lesson-text">0111 Konkretizacija: subjekti, subjekti, subjekti</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0112"><span class="lesson-text">0112 Konsultacije sa Istokom i pomoć u radu</span></label>
-            
-            <div class="module-footer">
-                <div class="action-box">
-                    <div class="action-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
-                        ARHIVA
-                    </div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="archive-checkbox" id="archive_m1">
-                        <div class="toggle-ui archive-ui">
-                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                        </div>
-                    </label>
-                </div>
-                <div class="action-box">
-                    <div class="action-header">STATUS</div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="status-checkbox" id="status_m1">
-                        <div class="toggle-ui status-ui"></div>
-                    </label>
-                </div>
-            </div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0101"><span class="lesson-text">0101 Kako napraviti dobru reklamu: Uvod</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0101"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0101"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0102"><span class="lesson-text">0102 UAVE - tajni metod Istoka Pavlovića za savršenu reklamu</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0102"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0102"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0103"><span class="lesson-text">0103 Primer: Butik Reels Masterclass</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0103"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0103"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0104"><span class="lesson-text">0104 Sparrow reklama koja je zaradila milion evra</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0104"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0104"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0105"><span class="lesson-text">0105 Jeat Meals: 200% povećana cela firma zbog jednog videa</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0105"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0105"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0106"><span class="lesson-text">0106 B Card: Hiljadu novih B2B klijenata od jednog videa</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0106"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0106"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0107"><span class="lesson-text">0107 Dijalog video doneo 220.000 evra prometa</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0107"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0107"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0108"><span class="lesson-text">0108 Zlatna haljina: vizuelni dokaz doneo 236.000 evra</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0108"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0108"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0109"><span class="lesson-text">0109 Vizuelni dokaz - najvažniji princip pored unikatnog ugla</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0109"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0109"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0110"><span class="lesson-text">0110 Kako početi video: Bilbord test</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0110"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0110"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0111"><span class="lesson-text">0111 Konkretizacija: subjekti, subjekti, subjekti</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0111"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0111"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0112"><span class="lesson-text">0112 Konsultacije sa Istokom i pomoć u radu</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0112"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0112"><div class="status-ui-compact"></div></label></div></div>
         </div>
     </div>
 
@@ -524,39 +500,17 @@
             <div class="arrow">▼</div>
         </div>
         <div class="module-content">
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0201"><span class="lesson-text">0201 Veštačka Inteligencija - pregled trenutno najboljih alata u marketingu</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0202"><span class="lesson-text">0202 Generisanje slike i videa: Med Zlato u Tegli</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0203"><span class="lesson-text">0203 Prvi i poslednji frejm: Med sa malinom</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0204"><span class="lesson-text">0204 Generisanje glasa na našem jeziku: Elevenlabs</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0205"><span class="lesson-text">0205 Reel za odeću: Sparrow komplet GRWM</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0206"><span class="lesson-text">0206 Generisanje muzike: Suno AI</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0207"><span class="lesson-text">0207 Cela reklama u AI: HighTicket Masterclass</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0208"><span class="lesson-text">0208 Cela reklama u AI: Porta Rai</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0209"><span class="lesson-text">0209 Zamena osobe: Muško u žensko i ostale kombinacije</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0210"><span class="lesson-text">0210 Primena AI u prezentacijama</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0211"><span class="lesson-text">0211 Primena AI u reelovima</span></label>
-
-            <div class="module-footer">
-                <div class="action-box">
-                    <div class="action-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
-                        ARHIVA
-                    </div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="archive-checkbox" id="archive_m2">
-                        <div class="toggle-ui archive-ui">
-                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                        </div>
-                    </label>
-                </div>
-                <div class="action-box">
-                    <div class="action-header">STATUS</div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="status-checkbox" id="status_m2">
-                        <div class="toggle-ui status-ui"></div>
-                    </label>
-                </div>
-            </div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0201"><span class="lesson-text">0201 Veštačka Inteligencija - pregled trenutno najboljih alata u marketingu</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0201"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0201"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0202"><span class="lesson-text">0202 Generisanje slike i videa: Med Zlato u Tegli</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0202"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0202"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0203"><span class="lesson-text">0203 Prvi i poslednji frejm: Med sa malinom</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0203"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0203"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0204"><span class="lesson-text">0204 Generisanje glasa na našem jeziku: Elevenlabs</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0204"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0204"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0205"><span class="lesson-text">0205 Reel za odeću: Sparrow komplet GRWM</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0205"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0205"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0206"><span class="lesson-text">0206 Generisanje muzike: Suno AI</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0206"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0206"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0207"><span class="lesson-text">0207 Cela reklama u AI: HighTicket Masterclass</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0207"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0207"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0208"><span class="lesson-text">0208 Cela reklama u AI: Porta Rai</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0208"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0208"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0209"><span class="lesson-text">0209 Zamena osobe: Muško u žensko i ostale kombinacije</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0209"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0209"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0210"><span class="lesson-text">0210 Primena AI u prezentacijama</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0210"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0211"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0211"><span class="lesson-text">0211 Primena AI u reelovima</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0211"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0212"><div class="status-ui-compact"></div></label></div></div>
         </div>
     </div>
 
@@ -568,42 +522,20 @@
             <div class="arrow">▼</div>
         </div>
         <div class="module-content">
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0301"><span class="lesson-text">0301 Uvod: Moji rezultati na Meta Ads</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0302"><span class="lesson-text">0302 Osnovni princip puštanja kampanje na Meti</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0303"><span class="lesson-text">0303 Puštanje jedne reklame od početka do kraja</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0304"><span class="lesson-text">0304 Tri nivoa kampanje i Ad Setovi</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0305"><span class="lesson-text">0305 Analiza rezultata</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0306"><span class="lesson-text">0306 Budžet - "koliko da stavim"</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0307"><span class="lesson-text">0307 PRVI PUT - podešavanje Ad Managera ako ga nikada niste koristili</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0308"><span class="lesson-text">0308 Custom Publika: Targetiranje ljudi koji nas stalno gledaju, a možda nisu zapratili</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0309"><span class="lesson-text">0309 Targertiranje Balkanaca u dijaspori</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0310"><span class="lesson-text">0310 Lookalike - nalaženje ljudi sličnih našim postojećim kupcima</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0311"><span class="lesson-text">0311 Lead kampanja - skupljanje kontakata na četiri načina</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0312"><span class="lesson-text">0312 ChatGPT kao pomoćnik za Meta Ads</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0313"><span class="lesson-text">0313 Kako se pravi dobra reklama</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0314"><span class="lesson-text">0314 Ideje za reklame od konkurencije: Foreplay i Meta Ads Library</span></label>
-
-            <div class="module-footer">
-                <div class="action-box">
-                    <div class="action-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
-                        ARHIVA
-                    </div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="archive-checkbox" id="archive_m3">
-                        <div class="toggle-ui archive-ui">
-                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                        </div>
-                    </label>
-                </div>
-                <div class="action-box">
-                    <div class="action-header">STATUS</div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="status-checkbox" id="status_m3">
-                        <div class="toggle-ui status-ui"></div>
-                    </label>
-                </div>
-            </div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0301"><span class="lesson-text">0301 Uvod: Moji rezultati na Meta Ads</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0301"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0301"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0302"><span class="lesson-text">0302 Osnovni princip puštanja kampanje na Meti</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0302"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0302"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0303"><span class="lesson-text">0303 Puštanje jedne reklame od početka do kraja</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0303"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0303"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0304"><span class="lesson-text">0304 Tri nivoa kampanje i Ad Setovi</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0304"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0304"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0305"><span class="lesson-text">0305 Analiza rezultata</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0305"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0305"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0306"><span class="lesson-text">0306 Budžet - "koliko da stavim"</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0306"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0306"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0307"><span class="lesson-text">0307 PRVI PUT - podešavanje Ad Managera ako ga nikada niste koristili</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0307"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0307"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0308"><span class="lesson-text">0308 Custom Publika: Targetiranje ljudi koji nas stalno gledaju, a možda nisu zapratili</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0308"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0308"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0309"><span class="lesson-text">0309 Targertiranje Balkanaca u dijaspori</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0309"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0309"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0310"><span class="lesson-text">0310 Lookalike - nalaženje ljudi sličnih našim postojećim kupcima</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0310"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0310"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0311"><span class="lesson-text">0311 Lead kampanja - skupljanje kontakata na četiri načina</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0311"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0311"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0312"><span class="lesson-text">0312 ChatGPT kao pomoćnik za Meta Ads</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0312"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0312"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0313"><span class="lesson-text">0313 Kako se pravi dobra reklama</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0313"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0313"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0314"><span class="lesson-text">0314 Ideje za reklame od konkurencije: Foreplay i Meta Ads Library</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0314"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0314"><div class="status-ui-compact"></div></label></div></div>
         </div>
     </div>
 
@@ -615,47 +547,25 @@
             <div class="arrow">▼</div>
         </div>
         <div class="module-content">
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0401"><span class="lesson-text">0401 Uvod u Content Marketing</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0402"><span class="lesson-text">0402 Avatar Kupca</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0403"><span class="lesson-text">0403 Cilj iza Cilja</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0404"><span class="lesson-text">0404 Benefiti i "Pa Šta" test</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0405"><span class="lesson-text">0405 USP - Jedinstveni ugao celog brenda</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0406"><span class="lesson-text">0406 Primer reklame sa scenarijem - žvake</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0407"><span class="lesson-text">0407 Najčešće greške kod USP-a</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0408"><span class="lesson-text">0408 Slogani - loša ili dobra ideja?</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0409"><span class="lesson-text">0409 Druže, jesi li dobro? Najvažniji test u pisanju za marketing</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0410"><span class="lesson-text">0410 Pisanje opisa proizvoda - najvažnija lekcija OBAVEZNO GLEDAJ</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0411"><span class="lesson-text">0411 Stare reklame: odavde ćete naučiti mnogo</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0412"><span class="lesson-text">0412 Proxy native landing stranice</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0413"><span class="lesson-text">0413 Pisanje za Google: primer Montažne kuće, tekst koji se rankirao prvi</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0414"><span class="lesson-text">0414 Pisanje liste</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0415"><span class="lesson-text">0415 Landing stranica u Elementoru - ceo tutorijal</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0416"><span class="lesson-text">0416 Content Strategija</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0417"><span class="lesson-text">0417 Content Marketing Plan</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0418"><span class="lesson-text">0418 Kreiranje scenarija iz knjiga i podcasta</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0419"><span class="lesson-text">0419 Puškice za pisanje</span></label>
-
-            <div class="module-footer">
-                <div class="action-box">
-                    <div class="action-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
-                        ARHIVA
-                    </div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="archive-checkbox" id="archive_m4">
-                        <div class="toggle-ui archive-ui">
-                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                        </div>
-                    </label>
-                </div>
-                <div class="action-box">
-                    <div class="action-header">STATUS</div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="status-checkbox" id="status_m4">
-                        <div class="toggle-ui status-ui"></div>
-                    </label>
-                </div>
-            </div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0401"><span class="lesson-text">0401 Uvod u Content Marketing</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0401"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0401"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0402"><span class="lesson-text">0402 Avatar Kupca</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0402"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0402"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0403"><span class="lesson-text">0403 Cilj iza Cilja</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0403"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0403"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0404"><span class="lesson-text">0404 Benefiti i "Pa Šta" test</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0404"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0404"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0405"><span class="lesson-text">0405 USP - Jedinstveni ugao celog brenda</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0405"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0405"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0406"><span class="lesson-text">0406 Primer reklame sa scenarijem - žvake</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0406"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0406"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0407"><span class="lesson-text">0407 Najčešće greške kod USP-a</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0407"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0407"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0408"><span class="lesson-text">0408 Slogani - loša ili dobra ideja?</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0408"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0408"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0409"><span class="lesson-text">0409 Druže, jesi li dobro? Najvažniji test u pisanju za marketing</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0409"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0409"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0410"><span class="lesson-text">0410 Pisanje opisa proizvoda - najvažnija lekcija OBAVEZNO GLEDAJ</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0410"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0410"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0411"><span class="lesson-text">0411 Stare reklame: odavde ćete naučiti mnogo</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0411"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0411"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0412"><span class="lesson-text">0412 Proxy native landing stranice</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0412"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0412"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0413"><span class="lesson-text">0413 Pisanje za Google: primer Montažne kuće, tekst koji se rankirao prvi</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0413"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0413"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0414"><span class="lesson-text">0414 Pisanje liste</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0414"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0414"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0415"><span class="lesson-text">0415 Landing stranica u Elementoru - ceo tutorijal</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0415"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0415"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0416"><span class="lesson-text">0416 Content Strategija</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0416"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0416"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0417"><span class="lesson-text">0417 Content Marketing Plan</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0417"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0417"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0418"><span class="lesson-text">0418 Kreiranje scenarija iz knjiga i podcasta</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0418"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0418"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0419"><span class="lesson-text">0419 Puškice za pisanje</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0419"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0419"><div class="status-ui-compact"></div></label></div></div>
         </div>
     </div>
 
@@ -667,48 +577,26 @@
             <div class="arrow">▼</div>
         </div>
         <div class="module-content">
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0501"><span class="lesson-text">0501 Filmski Jezik</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0502"><span class="lesson-text">0502 Vrste kadrova u filmskom jeziku</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0503"><span class="lesson-text">0503 Primer: Stanić, scenario i režija, Istok</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0504"><span class="lesson-text">0504 Kreiranje video reklame B Card</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0505"><span class="lesson-text">0505 CapCut montaža kompletan vodič</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0506"><span class="lesson-text">0506 Scenario za video i linija pažnje</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0507"><span class="lesson-text">0507 Primer: How2Fit</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0508"><span class="lesson-text">0508 Primer: Nutanix režija, Istok</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0509"><span class="lesson-text">0509 Longform video</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0510"><span class="lesson-text">0510 Snimanje sebe za lični brend</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0511"><span class="lesson-text">0511 Video Content Marketing Plan</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0512"><span class="lesson-text">0512 Palac Stoper u videu</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0513"><span class="lesson-text">0513 Početak koji zaustavlja skrol</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0514"><span class="lesson-text">0514 Skrolovanje feeda</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0515"><span class="lesson-text">0515 Scenario - primer stomatološke usluge</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0516"><span class="lesson-text">0516 Osnovni princip montaže</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0517"><span class="lesson-text">0517 Adobe Premiere tutorial</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0518"><span class="lesson-text">0518 Green Screen produkcija</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0519"><span class="lesson-text">0519 Kolor korekcija, grading i LUT-ovi</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0520"><span class="lesson-text">0520 Prirodni pokreti koji prijaju oku: Motion Graphics i Easing</span></label>
-
-            <div class="module-footer">
-                <div class="action-box">
-                    <div class="action-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
-                        ARHIVA
-                    </div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="archive-checkbox" id="archive_m5">
-                        <div class="toggle-ui archive-ui">
-                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                        </div>
-                    </label>
-                </div>
-                <div class="action-box">
-                    <div class="action-header">STATUS</div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="status-checkbox" id="status_m5">
-                        <div class="toggle-ui status-ui"></div>
-                    </label>
-                </div>
-            </div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0501"><span class="lesson-text">0501 Filmski Jezik</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0501"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0501"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0502"><span class="lesson-text">0502 Vrste kadrova u filmskom jeziku</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0502"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0502"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0503"><span class="lesson-text">0503 Primer: Stanić, scenario i režija, Istok</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0503"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0503"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0504"><span class="lesson-text">0504 Kreiranje video reklame B Card</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0504"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0504"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0505"><span class="lesson-text">0505 CapCut montaža kompletan vodič</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0505"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0505"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0506"><span class="lesson-text">0506 Scenario za video i linija pažnje</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0506"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0506"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0507"><span class="lesson-text">0507 Primer: How2Fit</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0507"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0507"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0508"><span class="lesson-text">0508 Primer: Nutanix režija, Istok</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0508"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0508"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0509"><span class="lesson-text">0509 Longform video</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0509"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0509"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0510"><span class="lesson-text">0510 Snimanje sebe za lični brend</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0510"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0510"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0511"><span class="lesson-text">0511 Video Content Marketing Plan</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0511"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0511"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0512"><span class="lesson-text">0512 Palac Stoper u videu</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0512"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0512"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0513"><span class="lesson-text">0513 Početak koji zaustavlja skrol</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0513"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0513"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0514"><span class="lesson-text">0514 Skrolovanje feeda</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0514"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0514"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0515"><span class="lesson-text">0515 Scenario - primer stomatološke usluge</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0515"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0515"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0516"><span class="lesson-text">0516 Osnovni princip montaže</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0516"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0516"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0517"><span class="lesson-text">0517 Adobe Premiere tutorial</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0517"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0517"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0518"><span class="lesson-text">0518 Green Screen produkcija</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0518"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0518"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0519"><span class="lesson-text">0519 Kolor korekcija, grading i LUT-ovi</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0519"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0519"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0520"><span class="lesson-text">0520 Prirodni pokreti koji prijaju oku: Motion Graphics i Easing</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0520"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0520"><div class="status-ui-compact"></div></label></div></div>
         </div>
     </div>
 
@@ -720,48 +608,26 @@
             <div class="arrow">▼</div>
         </div>
         <div class="module-content">
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0601"><span class="lesson-text">0601 Prodajni levak - uvod</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0602"><span class="lesson-text">0602 Prodajni levak za online kupovinu</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0603"><span class="lesson-text">0603 Prodajni levak za generisanje leadova</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0604"><span class="lesson-text">0604 Retargeting Levak</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0605"><span class="lesson-text">0605 Ulazak u levak - namera i prekid</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0606"><span class="lesson-text">0606 Organski i plaćeni saobraćaj</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0607"><span class="lesson-text">0607 Hladan, Topli i Vrući saobraćaj</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0608"><span class="lesson-text">0608 Voće sa niskih grana</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0609"><span class="lesson-text">0609 Debug Kampanja</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0610"><span class="lesson-text">0610 Lestvica vrednosti</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0611"><span class="lesson-text">0611 Emocionalna lestvica vrednosti</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0612"><span class="lesson-text">0612 Lead magnet</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0613"><span class="lesson-text">0613 Najćešće greške u marketingu</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0614"><span class="lesson-text">0614 Love Organic Studija Slučaja</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0615"><span class="lesson-text">0615 Strongman studija slučaja</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0616"><span class="lesson-text">0616 Zamurović studija slučaja</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0617"><span class="lesson-text">0617 Kupujem prodajem levak</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0618"><span class="lesson-text">0618 Content marketing levak</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0619"><span class="lesson-text">0619 Shortform video levak</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0620"><span class="lesson-text">0620 Longform video levak</span></label>
-
-            <div class="module-footer">
-                <div class="action-box">
-                    <div class="action-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
-                        ARHIVA
-                    </div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="archive-checkbox" id="archive_m6">
-                        <div class="toggle-ui archive-ui">
-                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                        </div>
-                    </label>
-                </div>
-                <div class="action-box">
-                    <div class="action-header">STATUS</div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="status-checkbox" id="status_m6">
-                        <div class="toggle-ui status-ui"></div>
-                    </label>
-                </div>
-            </div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0601"><span class="lesson-text">0601 Prodajni levak - uvod</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0601"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0601"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0602"><span class="lesson-text">0602 Prodajni levak za online kupovinu</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0602"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0602"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0603"><span class="lesson-text">0603 Prodajni levak za generisanje leadova</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0603"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0603"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0604"><span class="lesson-text">0604 Retargeting Levak</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0604"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0604"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0605"><span class="lesson-text">0605 Ulazak u levak - namera i prekid</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0605"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0605"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0606"><span class="lesson-text">0606 Organski i plaćeni saobraćaj</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0606"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0606"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0607"><span class="lesson-text">0607 Hladan, Topli i Vrući saobraćaj</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0607"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0607"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0608"><span class="lesson-text">0608 Voće sa niskih grana</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0608"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0608"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0609"><span class="lesson-text">0609 Debug Kampanja</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0609"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0609"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0610"><span class="lesson-text">0610 Lestvica vrednosti</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0610"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0610"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0611"><span class="lesson-text">0611 Emocionalna lestvica vrednosti</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0611"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0611"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0612"><span class="lesson-text">0612 Lead magnet</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0612"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0612"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0613"><span class="lesson-text">0613 Najćešće greške u marketingu</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0613"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0613"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0614"><span class="lesson-text">0614 Love Organic Studija Slučaja</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0614"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0614"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0615"><span class="lesson-text">0615 Strongman studija slučaja</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0615"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0615"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0616"><span class="lesson-text">0616 Zamurović studija slučaja</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0616"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0616"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0617"><span class="lesson-text">0617 Kupujem prodajem levak</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0617"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0617"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0618"><span class="lesson-text">0618 Content marketing levak</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0618"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0618"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0619"><span class="lesson-text">0619 Shortform video levak</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0619"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0619"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0620"><span class="lesson-text">0620 Longform video levak</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0620"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0620"><div class="status-ui-compact"></div></label></div></div>
         </div>
     </div>
 
@@ -773,44 +639,22 @@
             <div class="arrow">▼</div>
         </div>
         <div class="module-content">
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0701"><span class="lesson-text">0701 Šta nije dizajn</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0702"><span class="lesson-text">0702 Pet univerzalnih vrednosti dizajna</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0703"><span class="lesson-text">0703 Kontrast i jukstapozicija</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0704"><span class="lesson-text">0704 Ponavljanje i konzistencija</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0705"><span class="lesson-text">0705 Ravnanje</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0706"><span class="lesson-text">0706 Blizina i proximity</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0707"><span class="lesson-text">0707 Prazan prostor</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0708"><span class="lesson-text">0708 Tekst preko slike i videa - sublimacija</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0709"><span class="lesson-text">0709 Tipografija - uvod</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0710"><span class="lesson-text">0710 Tipografija - izbor fonta</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0711"><span class="lesson-text">0711 Tipografija i estetika uklapanja</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0712"><span class="lesson-text">0712 Estetika teksta preko slike</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0713"><span class="lesson-text">0713 Principi dizajna u primerima</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0714"><span class="lesson-text">0714 Psihologija boja</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0715"><span class="lesson-text">0715 Primena principa dizajna - vežba</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0716"><span class="lesson-text">0716 Photoshop za marketing</span></label>
-
-            <div class="module-footer">
-                <div class="action-box">
-                    <div class="action-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
-                        ARHIVA
-                    </div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="archive-checkbox" id="archive_m7">
-                        <div class="toggle-ui archive-ui">
-                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                        </div>
-                    </label>
-                </div>
-                <div class="action-box">
-                    <div class="action-header">STATUS</div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="status-checkbox" id="status_m7">
-                        <div class="toggle-ui status-ui"></div>
-                    </label>
-                </div>
-            </div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0701"><span class="lesson-text">0701 Šta nije dizajn</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0701"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0701"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0702"><span class="lesson-text">0702 Pet univerzalnih vrednosti dizajna</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0702"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0702"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0703"><span class="lesson-text">0703 Kontrast i jukstapozicija</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0703"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0703"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0704"><span class="lesson-text">0704 Ponavljanje i konzistencija</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0704"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0704"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0705"><span class="lesson-text">0705 Ravnanje</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0705"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0705"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0706"><span class="lesson-text">0706 Blizina i proximity</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0706"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0706"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0707"><span class="lesson-text">0707 Prazan prostor</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0707"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0707"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0708"><span class="lesson-text">0708 Tekst preko slike i videa - sublimacija</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0708"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0708"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0709"><span class="lesson-text">0709 Tipografija - uvod</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0709"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0709"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0710"><span class="lesson-text">0710 Tipografija - izbor fonta</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0710"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0710"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0711"><span class="lesson-text">0711 Tipografija i estetika uklapanja</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0711"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0711"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0712"><span class="lesson-text">0712 Estetika teksta preko slike</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0712"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0712"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0713"><span class="lesson-text">0713 Principi dizajna u primerima</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0713"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0713"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0714"><span class="lesson-text">0714 Psihologija boja</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0714"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0714"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0715"><span class="lesson-text">0715 Primena principa dizajna - vežba</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0715"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0715"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0716"><span class="lesson-text">0716 Photoshop za marketing</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0716"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0716"><div class="status-ui-compact"></div></label></div></div>
         </div>
     </div>
 
@@ -822,29 +666,7 @@
             <div class="arrow">▼</div>
         </div>
         <div class="module-content">
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0801"><span class="lesson-text">0801 Fotografisanje proizvoda</span></label>
-            
-            <div class="module-footer">
-                <div class="action-box">
-                    <div class="action-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
-                        ARHIVA
-                    </div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="archive-checkbox" id="archive_m8">
-                        <div class="toggle-ui archive-ui">
-                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                        </div>
-                    </label>
-                </div>
-                <div class="action-box">
-                    <div class="action-header">STATUS</div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="status-checkbox" id="status_m8">
-                        <div class="toggle-ui status-ui"></div>
-                    </label>
-                </div>
-            </div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0801"><span class="lesson-text">0801 Fotografisanje proizvoda</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0801"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0801"><div class="status-ui-compact"></div></label></div></div>
         </div>
     </div>
 
@@ -856,39 +678,17 @@
             <div class="arrow">▼</div>
         </div>
         <div class="module-content">
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0901"><span class="lesson-text">0901 Šta je brend</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0902"><span class="lesson-text">0902 Pozicioniranje brenda</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0903"><span class="lesson-text">0903 Šta sve može biti brend</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0904"><span class="lesson-text">0904 Brend vs Robna marka</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0905"><span class="lesson-text">0905 Histerezis poverenja i izdaje</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0906"><span class="lesson-text">0906 Analiza brendova na terenu</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0907"><span class="lesson-text">0907 Co Branding</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0908"><span class="lesson-text">0908 Kako se gradi brend</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0909"><span class="lesson-text">0909 Kreiranje imena brenda</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0910"><span class="lesson-text">0910 Vizuelni identitet</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0911"><span class="lesson-text">0911 Logo brenda</span></label>
-
-            <div class="module-footer">
-                <div class="action-box">
-                    <div class="action-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
-                        ARHIVA
-                    </div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="archive-checkbox" id="archive_m9">
-                        <div class="toggle-ui archive-ui">
-                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                        </div>
-                    </label>
-                </div>
-                <div class="action-box">
-                    <div class="action-header">STATUS</div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="status-checkbox" id="status_m9">
-                        <div class="toggle-ui status-ui"></div>
-                    </label>
-                </div>
-            </div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0901"><span class="lesson-text">0901 Šta je brend</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0901"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0901"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0902"><span class="lesson-text">0902 Pozicioniranje brenda</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0902"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0902"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0903"><span class="lesson-text">0903 Šta sve može biti brend</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0903"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0903"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0904"><span class="lesson-text">0904 Brend vs Robna marka</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0904"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0904"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0905"><span class="lesson-text">0905 Histerezis poverenja i izdaje</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0905"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0905"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0906"><span class="lesson-text">0906 Analiza brendova na terenu</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0906"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0906"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0907"><span class="lesson-text">0907 Co Branding</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0907"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0907"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0908"><span class="lesson-text">0908 Kako se gradi brend</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0908"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0908"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0909"><span class="lesson-text">0909 Kreiranje imena brenda</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0909"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0909"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0910"><span class="lesson-text">0910 Vizuelni identitet</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0910"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0910"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0911"><span class="lesson-text">0911 Logo brenda</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l0911"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l0911"><div class="status-ui-compact"></div></label></div></div>
         </div>
     </div>
 
@@ -900,35 +700,13 @@
             <div class="arrow">▼</div>
         </div>
         <div class="module-content">
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1001"><span class="lesson-text">1001 Svetlo</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1002"><span class="lesson-text">1002 Kontekst</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1003"><span class="lesson-text">1003 Kamera</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1004"><span class="lesson-text">1004 Boje</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1005"><span class="lesson-text">1005 Editovanje boja</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1006"><span class="lesson-text">1006 Napredno editovanje</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1007"><span class="lesson-text">1007 Scouting lokacije</span></label>
-
-            <div class="module-footer">
-                <div class="action-box">
-                    <div class="action-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
-                        ARHIVA
-                    </div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="archive-checkbox" id="archive_m10">
-                        <div class="toggle-ui archive-ui">
-                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                        </div>
-                    </label>
-                </div>
-                <div class="action-box">
-                    <div class="action-header">STATUS</div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="status-checkbox" id="status_m10">
-                        <div class="toggle-ui status-ui"></div>
-                    </label>
-                </div>
-            </div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1001"><span class="lesson-text">1001 Svetlo</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1001"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1001"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1002"><span class="lesson-text">1002 Kontekst</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1002"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1002"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1003"><span class="lesson-text">1003 Kamera</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1003"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1003"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1004"><span class="lesson-text">1004 Boje</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1004"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1004"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1005"><span class="lesson-text">1005 Editovanje boja</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1005"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1005"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1006"><span class="lesson-text">1006 Napredno editovanje</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1006"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1006"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1007"><span class="lesson-text">1007 Scouting lokacije</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1007"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1007"><div class="status-ui-compact"></div></label></div></div>
         </div>
     </div>
 
@@ -940,37 +718,15 @@
             <div class="arrow">▼</div>
         </div>
         <div class="module-content">
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1101"><span class="lesson-text">1101 Uvod u Email marketing</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1102"><span class="lesson-text">1102 Alati za email marketing</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1103"><span class="lesson-text">1103 Kako da email stigne u primarni Inbox</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1104"><span class="lesson-text">1104 Kako da ljudi otvor email - subject kao hook</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1105"><span class="lesson-text">1105 Trigerovanje odgovora i strategija prvog maila</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1106"><span class="lesson-text">1106 Telo maila</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1107"><span class="lesson-text">1107 Kako se koriste email alati</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1108"><span class="lesson-text">1108 GDPR</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1109"><span class="lesson-text">1109 Sekvence i drip kampanje</span></label>
-
-            <div class="module-footer">
-                <div class="action-box">
-                    <div class="action-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
-                        ARHIVA
-                    </div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="archive-checkbox" id="archive_m11">
-                        <div class="toggle-ui archive-ui">
-                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                        </div>
-                    </label>
-                </div>
-                <div class="action-box">
-                    <div class="action-header">STATUS</div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="status-checkbox" id="status_m11">
-                        <div class="toggle-ui status-ui"></div>
-                    </label>
-                </div>
-            </div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1101"><span class="lesson-text">1101 Uvod u Email marketing</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1101"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1101"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1102"><span class="lesson-text">1102 Alati za email marketing</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1102"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1102"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1103"><span class="lesson-text">1103 Kako da email stigne u primarni Inbox</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1103"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1103"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1104"><span class="lesson-text">1104 Kako da ljudi otvor email - subject kao hook</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1104"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1104"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1105"><span class="lesson-text">1105 Trigerovanje odgovora i strategija prvog maila</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1105"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1105"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1106"><span class="lesson-text">1106 Telo maila</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1106"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1106"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1107"><span class="lesson-text">1107 Kako se koriste email alati</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1107"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1107"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1108"><span class="lesson-text">1108 GDPR</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1108"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1108"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1109"><span class="lesson-text">1109 Sekvence i drip kampanje</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1109"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1109"><div class="status-ui-compact"></div></label></div></div>
         </div>
     </div>
 
@@ -982,39 +738,17 @@
             <div class="arrow">▼</div>
         </div>
         <div class="module-content">
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1201"><span class="lesson-text">1201 Uvod u SEO</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1202"><span class="lesson-text">1202 Faktori rankiranja</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1203"><span class="lesson-text">1203 Istraživanje ključnih reči</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1204"><span class="lesson-text">1204 Content strategija za SEO</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1205"><span class="lesson-text">1205 Backlinkovi</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1206"><span class="lesson-text">1206 SEO i Retargeting</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1207"><span class="lesson-text">1207 Brzina sajta</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1208"><span class="lesson-text">1208 SEO za online shop</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1209"><span class="lesson-text">1209 SEO za usluge</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1210"><span class="lesson-text">1210 SEO za Google mape</span></label>
-            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1211"><span class="lesson-text">1211 Kreiranje SEO authority sajta</span></label>
-
-            <div class="module-footer">
-                <div class="action-box">
-                    <div class="action-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
-                        ARHIVA
-                    </div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="archive-checkbox" id="archive_m12">
-                        <div class="toggle-ui archive-ui">
-                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                        </div>
-                    </label>
-                </div>
-                <div class="action-box">
-                    <div class="action-header">STATUS</div>
-                    <label class="custom-toggle">
-                        <input type="checkbox" class="status-checkbox" id="status_m12">
-                        <div class="toggle-ui status-ui"></div>
-                    </label>
-                </div>
-            </div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1201"><span class="lesson-text">1201 Uvod u SEO</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1201"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1201"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1202"><span class="lesson-text">1202 Faktori rankiranja</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1202"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1202"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1203"><span class="lesson-text">1203 Istraživanje ključnih reči</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1203"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1203"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1204"><span class="lesson-text">1204 Content strategija za SEO</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1204"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1204"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1205"><span class="lesson-text">1205 Backlinkovi</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1205"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1205"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1206"><span class="lesson-text">1206 SEO i Retargeting</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1206"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1206"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1207"><span class="lesson-text">1207 Brzina sajta</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1207"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1207"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1208"><span class="lesson-text">1208 SEO za online shop</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1208"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1208"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1209"><span class="lesson-text">1209 SEO za usluge</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1209"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1209"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1210"><span class="lesson-text">1210 SEO za Google mape</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1210"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1210"><div class="status-ui-compact"></div></label></div></div>
+            <div class="lesson-row"><label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1211"><span class="lesson-text">1211 Kreiranje SEO authority sajta</span></label><div class="lesson-actions"><label class="action-label-compact custom-toggle"><span class="action-text">Arhiva</span><input type="checkbox" class="archive-checkbox" id="archive_l1211"><div class="archive-ui-compact"><svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div></label><label class="action-label-compact custom-toggle"><input type="checkbox" class="status-checkbox" id="status_l1211"><div class="status-ui-compact"></div></label></div></div>
         </div>
     </div>
 
