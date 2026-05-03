@@ -96,18 +96,54 @@
         }
 
         .module {
-            margin-bottom: 40px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: var(--container-bg);
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            transition: background-color 0.2s ease;
+        }
+
+        .module-header:hover {
+            background-color: #e9ecef;
         }
 
         .module-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: var(--text-main);
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--border-color);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        .module-toggle-icon {
+            font-size: 14px;
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+
+        .module.open .module-toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .module-content {
+            display: none;
+            padding: 15px 20px 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .module.open .module-content {
+            display: block;
         }
 
         .lesson-list {
@@ -497,11 +533,25 @@
                 const moduleDiv = document.createElement('div');
                 moduleDiv.className = 'module';
                 
-                // Naslov modula
+                // --- HEADER (Klikabilni deo za otvaranje menija) ---
+                const moduleHeader = document.createElement('div');
+                moduleHeader.className = 'module-header';
+                
                 const moduleTitle = document.createElement('h2');
                 moduleTitle.className = 'module-title';
                 moduleTitle.textContent = mod.module;
-                moduleDiv.appendChild(moduleTitle);
+
+                const toggleIcon = document.createElement('span');
+                toggleIcon.className = 'module-toggle-icon';
+                toggleIcon.innerHTML = '▼'; // Strelica
+
+                moduleHeader.appendChild(moduleTitle);
+                moduleHeader.appendChild(toggleIcon);
+                moduleDiv.appendChild(moduleHeader);
+
+                // --- CONTENT (Sakriveni deo sa lekcijama) ---
+                const moduleContent = document.createElement('div');
+                moduleContent.className = 'module-content';
 
                 // Lista lekcija
                 const lessonList = document.createElement('ul');
@@ -548,8 +598,14 @@
                     lessonList.appendChild(li);
                 });
 
-                moduleDiv.appendChild(lessonList);
+                moduleContent.appendChild(lessonList);
+                moduleDiv.appendChild(moduleContent);
                 container.appendChild(moduleDiv);
+
+                // --- LOGIKA ZA OTVARANJE/ZATVARANJE MODULA ---
+                moduleHeader.addEventListener('click', () => {
+                    moduleDiv.classList.toggle('open');
+                });
             });
 
             // Funkcija za osvežavanje progres bara
