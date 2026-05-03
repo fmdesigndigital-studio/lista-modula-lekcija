@@ -12,6 +12,8 @@
             --module-border: #e0e0e0;
             --accent-color: #0066cc; /* Plava za modul u izradi */
             --success-color: #28a745; /* Zelena za završene lekcije */
+            --status-success: #1fc77c; /* Zelena za ZAVRŠENO dugme */
+            --archive-color: #5a4bda; /* Ljubičasto-plava sa screenshota */
             --progress-bg: #e9ecef;
             --font-family: Arial, Helvetica, sans-serif;
         }
@@ -239,6 +241,120 @@
             height: 12px;
         }
 
+        /* -------------------------------------
+           NOVO: Modul Footer - Arhiva i Status
+           ------------------------------------- */
+        .module-footer {
+            display: flex;
+            justify-content: center; /* Centrirano kao na slici */
+            gap: 60px;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px dashed #dcdcdc;
+            flex-wrap: wrap;
+        }
+
+        .action-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .action-header {
+            font-size: 13px;
+            font-weight: bold;
+            color: #8c98a4;
+            letter-spacing: 2px;
+            display: flex;
+            flex-direction: column; /* Ikonica iznad teksta */
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+        }
+
+        .action-header svg {
+            width: 22px;
+            height: 22px;
+            color: #8c98a4;
+        }
+
+        .custom-toggle {
+            display: block;
+        }
+        
+        /* Skrivamo globalni checkbox stil samo za ove specifične tastere */
+        .custom-toggle input[type="checkbox"] {
+            display: none !important; 
+        }
+
+        /* ARHIVA Dugme dizajn (Prema slici) */
+        .archive-ui {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            background-color: #f4f5fa; /* Svetlo ljubičasta kao na slici */
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(90, 75, 218, 0.1);
+        }
+
+        .archive-ui .check-icon {
+            width: 32px;
+            height: 32px;
+            color: var(--archive-color); /* Ljubičasta ikonica */
+            transition: all 0.2s ease;
+        }
+
+        /* ARHIVA Neaktivno stanje */
+        .custom-toggle input:not(:checked) + .archive-ui {
+            background-color: #f1f3f5;
+            box-shadow: none;
+        }
+
+        .custom-toggle input:not(:checked) + .archive-ui .check-icon {
+            color: #cbd5e0;
+        }
+
+        /* STATUS Dugme dizajn (Prema slici) */
+        .status-ui {
+            padding: 0 24px;
+            border-radius: 12px;
+            background-color: #f1f3f5;
+            color: #adb5bd;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 140px;
+            height: 50px;
+        }
+
+        .status-ui::after {
+            content: "U TOKU";
+        }
+
+        /* STATUS Aktivno stanje */
+        .custom-toggle input:checked + .status-ui {
+            background-color: var(--status-success);
+            color: white;
+            box-shadow: 0 4px 12px rgba(31, 199, 124, 0.3);
+            border-color: var(--status-success);
+        }
+
+        .custom-toggle input:checked + .status-ui::after {
+            content: "ZAVRŠENO";
+        }
+
+
         /* Dugme i Footer */
         .reset-btn-container {
             margin-top: 50px;
@@ -333,6 +449,7 @@
         @media (max-width: 600px) {
             .container { padding: 15px; }
             .module-content { padding-left: 20px; }
+            .module-footer { gap: 20px; justify-content: space-around; }
         }
     </style>
 </head>
@@ -354,8 +471,7 @@
         </div>
     </div>
 
-    <!-- Generisani sadržaj počinje ovde -->
-
+    <!-- Modul 1 -->
     <div class="module">
         <div class="module-header">
             <input type="checkbox" class="module-checkbox" id="m1">
@@ -375,9 +491,32 @@
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0110"><span class="lesson-text">0110 Kako početi video: Bilbord test</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0111"><span class="lesson-text">0111 Konkretizacija: subjekti, subjekti, subjekti</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0112"><span class="lesson-text">0112 Konsultacije sa Istokom i pomoć u radu</span></label>
+            
+            <div class="module-footer">
+                <div class="action-box">
+                    <div class="action-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
+                        ARHIVA
+                    </div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="archive-checkbox" id="archive_m1">
+                        <div class="toggle-ui archive-ui">
+                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                        </div>
+                    </label>
+                </div>
+                <div class="action-box">
+                    <div class="action-header">STATUS</div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="status-checkbox" id="status_m1">
+                        <div class="toggle-ui status-ui"></div>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Modul 2 -->
     <div class="module">
         <div class="module-header">
             <input type="checkbox" class="module-checkbox" id="m2">
@@ -396,9 +535,32 @@
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0209"><span class="lesson-text">0209 Zamena osobe: Muško u žensko i ostale kombinacije</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0210"><span class="lesson-text">0210 Primena AI u prezentacijama</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0211"><span class="lesson-text">0211 Primena AI u reelovima</span></label>
+
+            <div class="module-footer">
+                <div class="action-box">
+                    <div class="action-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
+                        ARHIVA
+                    </div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="archive-checkbox" id="archive_m2">
+                        <div class="toggle-ui archive-ui">
+                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                        </div>
+                    </label>
+                </div>
+                <div class="action-box">
+                    <div class="action-header">STATUS</div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="status-checkbox" id="status_m2">
+                        <div class="toggle-ui status-ui"></div>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Modul 3 -->
     <div class="module">
         <div class="module-header">
             <input type="checkbox" class="module-checkbox" id="m3">
@@ -420,9 +582,32 @@
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0312"><span class="lesson-text">0312 ChatGPT kao pomoćnik za Meta Ads</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0313"><span class="lesson-text">0313 Kako se pravi dobra reklama</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0314"><span class="lesson-text">0314 Ideje za reklame od konkurencije: Foreplay i Meta Ads Library</span></label>
+
+            <div class="module-footer">
+                <div class="action-box">
+                    <div class="action-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
+                        ARHIVA
+                    </div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="archive-checkbox" id="archive_m3">
+                        <div class="toggle-ui archive-ui">
+                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                        </div>
+                    </label>
+                </div>
+                <div class="action-box">
+                    <div class="action-header">STATUS</div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="status-checkbox" id="status_m3">
+                        <div class="toggle-ui status-ui"></div>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Modul 4 -->
     <div class="module">
         <div class="module-header">
             <input type="checkbox" class="module-checkbox" id="m4">
@@ -449,9 +634,32 @@
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0417"><span class="lesson-text">0417 Content Marketing Plan</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0418"><span class="lesson-text">0418 Kreiranje scenarija iz knjiga i podcasta</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0419"><span class="lesson-text">0419 Puškice za pisanje</span></label>
+
+            <div class="module-footer">
+                <div class="action-box">
+                    <div class="action-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
+                        ARHIVA
+                    </div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="archive-checkbox" id="archive_m4">
+                        <div class="toggle-ui archive-ui">
+                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                        </div>
+                    </label>
+                </div>
+                <div class="action-box">
+                    <div class="action-header">STATUS</div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="status-checkbox" id="status_m4">
+                        <div class="toggle-ui status-ui"></div>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Modul 5 -->
     <div class="module">
         <div class="module-header">
             <input type="checkbox" class="module-checkbox" id="m5">
@@ -479,9 +687,32 @@
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0518"><span class="lesson-text">0518 Green Screen produkcija</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0519"><span class="lesson-text">0519 Kolor korekcija, grading i LUT-ovi</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0520"><span class="lesson-text">0520 Prirodni pokreti koji prijaju oku: Motion Graphics i Easing</span></label>
+
+            <div class="module-footer">
+                <div class="action-box">
+                    <div class="action-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
+                        ARHIVA
+                    </div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="archive-checkbox" id="archive_m5">
+                        <div class="toggle-ui archive-ui">
+                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                        </div>
+                    </label>
+                </div>
+                <div class="action-box">
+                    <div class="action-header">STATUS</div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="status-checkbox" id="status_m5">
+                        <div class="toggle-ui status-ui"></div>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Modul 6 -->
     <div class="module">
         <div class="module-header">
             <input type="checkbox" class="module-checkbox" id="m6">
@@ -509,9 +740,32 @@
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0618"><span class="lesson-text">0618 Content marketing levak</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0619"><span class="lesson-text">0619 Shortform video levak</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0620"><span class="lesson-text">0620 Longform video levak</span></label>
+
+            <div class="module-footer">
+                <div class="action-box">
+                    <div class="action-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
+                        ARHIVA
+                    </div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="archive-checkbox" id="archive_m6">
+                        <div class="toggle-ui archive-ui">
+                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                        </div>
+                    </label>
+                </div>
+                <div class="action-box">
+                    <div class="action-header">STATUS</div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="status-checkbox" id="status_m6">
+                        <div class="toggle-ui status-ui"></div>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Modul 7 -->
     <div class="module">
         <div class="module-header">
             <input type="checkbox" class="module-checkbox" id="m7">
@@ -535,9 +789,32 @@
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0714"><span class="lesson-text">0714 Psihologija boja</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0715"><span class="lesson-text">0715 Primena principa dizajna - vežba</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0716"><span class="lesson-text">0716 Photoshop za marketing</span></label>
+
+            <div class="module-footer">
+                <div class="action-box">
+                    <div class="action-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
+                        ARHIVA
+                    </div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="archive-checkbox" id="archive_m7">
+                        <div class="toggle-ui archive-ui">
+                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                        </div>
+                    </label>
+                </div>
+                <div class="action-box">
+                    <div class="action-header">STATUS</div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="status-checkbox" id="status_m7">
+                        <div class="toggle-ui status-ui"></div>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Modul 8 -->
     <div class="module">
         <div class="module-header">
             <input type="checkbox" class="module-checkbox" id="m8">
@@ -546,9 +823,32 @@
         </div>
         <div class="module-content">
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0801"><span class="lesson-text">0801 Fotografisanje proizvoda</span></label>
+            
+            <div class="module-footer">
+                <div class="action-box">
+                    <div class="action-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
+                        ARHIVA
+                    </div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="archive-checkbox" id="archive_m8">
+                        <div class="toggle-ui archive-ui">
+                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                        </div>
+                    </label>
+                </div>
+                <div class="action-box">
+                    <div class="action-header">STATUS</div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="status-checkbox" id="status_m8">
+                        <div class="toggle-ui status-ui"></div>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Modul 9 -->
     <div class="module">
         <div class="module-header">
             <input type="checkbox" class="module-checkbox" id="m9">
@@ -567,9 +867,32 @@
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0909"><span class="lesson-text">0909 Kreiranje imena brenda</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0910"><span class="lesson-text">0910 Vizuelni identitet</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0911"><span class="lesson-text">0911 Logo brenda</span></label>
+
+            <div class="module-footer">
+                <div class="action-box">
+                    <div class="action-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
+                        ARHIVA
+                    </div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="archive-checkbox" id="archive_m9">
+                        <div class="toggle-ui archive-ui">
+                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                        </div>
+                    </label>
+                </div>
+                <div class="action-box">
+                    <div class="action-header">STATUS</div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="status-checkbox" id="status_m9">
+                        <div class="toggle-ui status-ui"></div>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Modul 10 -->
     <div class="module">
         <div class="module-header">
             <input type="checkbox" class="module-checkbox" id="m10">
@@ -584,9 +907,32 @@
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1005"><span class="lesson-text">1005 Editovanje boja</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1006"><span class="lesson-text">1006 Napredno editovanje</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1007"><span class="lesson-text">1007 Scouting lokacije</span></label>
+
+            <div class="module-footer">
+                <div class="action-box">
+                    <div class="action-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
+                        ARHIVA
+                    </div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="archive-checkbox" id="archive_m10">
+                        <div class="toggle-ui archive-ui">
+                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                        </div>
+                    </label>
+                </div>
+                <div class="action-box">
+                    <div class="action-header">STATUS</div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="status-checkbox" id="status_m10">
+                        <div class="toggle-ui status-ui"></div>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Modul 11 -->
     <div class="module">
         <div class="module-header">
             <input type="checkbox" class="module-checkbox" id="m11">
@@ -603,9 +949,32 @@
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1107"><span class="lesson-text">1107 Kako se koriste email alati</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1108"><span class="lesson-text">1108 GDPR</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1109"><span class="lesson-text">1109 Sekvence i drip kampanje</span></label>
+
+            <div class="module-footer">
+                <div class="action-box">
+                    <div class="action-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
+                        ARHIVA
+                    </div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="archive-checkbox" id="archive_m11">
+                        <div class="toggle-ui archive-ui">
+                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                        </div>
+                    </label>
+                </div>
+                <div class="action-box">
+                    <div class="action-header">STATUS</div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="status-checkbox" id="status_m11">
+                        <div class="toggle-ui status-ui"></div>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Modul 12 -->
     <div class="module">
         <div class="module-header">
             <input type="checkbox" class="module-checkbox" id="m12">
@@ -624,6 +993,28 @@
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1209"><span class="lesson-text">1209 SEO za usluge</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1210"><span class="lesson-text">1210 SEO za Google mape</span></label>
             <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1211"><span class="lesson-text">1211 Kreiranje SEO authority sajta</span></label>
+
+            <div class="module-footer">
+                <div class="action-box">
+                    <div class="action-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="2" ry="2"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path></svg>
+                        ARHIVA
+                    </div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="archive-checkbox" id="archive_m12">
+                        <div class="toggle-ui archive-ui">
+                            <svg viewBox="0 0 24 24" class="check-icon"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                        </div>
+                    </label>
+                </div>
+                <div class="action-box">
+                    <div class="action-header">STATUS</div>
+                    <label class="custom-toggle">
+                        <input type="checkbox" class="status-checkbox" id="status_m12">
+                        <div class="toggle-ui status-ui"></div>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -655,25 +1046,25 @@
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         const STORAGE_KEY = "masterbox_checklist_v1";
+        
+        // Selektovanje svih vrsta checkbox-ova
         const lessonCheckboxes = document.querySelectorAll('.lesson-checkbox');
         const moduleCheckboxes = document.querySelectorAll('.module-checkbox');
+        const archiveCheckboxes = document.querySelectorAll('.archive-checkbox');
+        const statusCheckboxes = document.querySelectorAll('.status-checkbox');
+        
+        // Svi checkbox-ovi na stranici u jednom nizu zbog lakšeg čuvanja
+        const allStateCheckboxes = [...lessonCheckboxes, ...moduleCheckboxes, ...archiveCheckboxes, ...statusCheckboxes];
+
         const progressFill = document.getElementById('progress-fill');
         const progressText = document.getElementById('progress-text');
-        const totalLessons = lessonCheckboxes.length; // Biće 151
+        const totalLessons = lessonCheckboxes.length; // 151
 
         // Učitavanje iz localStorage-a
         function loadState() {
             const savedState = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
             
-            // Lekcije
-            lessonCheckboxes.forEach(cb => {
-                if (savedState[cb.id]) {
-                    cb.checked = true;
-                }
-            });
-
-            // Moduli (oznake izrade)
-            moduleCheckboxes.forEach(cb => {
+            allStateCheckboxes.forEach(cb => {
                 if (savedState[cb.id]) {
                     cb.checked = true;
                 }
@@ -686,11 +1077,7 @@
         function saveState() {
             const state = {};
             
-            lessonCheckboxes.forEach(cb => {
-                if (cb.checked) state[cb.id] = true;
-            });
-
-            moduleCheckboxes.forEach(cb => {
+            allStateCheckboxes.forEach(cb => {
                 if (cb.checked) state[cb.id] = true;
             });
 
@@ -698,7 +1085,7 @@
             updateProgress();
         }
 
-        // Ažuriranje trake napretka (Progres bar)
+        // Ažuriranje trake napretka (Progres bar se odnosi isključivo na Lekcije)
         function updateProgress() {
             let checkedLessons = 0;
             lessonCheckboxes.forEach(cb => {
@@ -713,15 +1100,13 @@
 
         // --- DOGAĐAJI (EVENT LISTENERS) ---
 
-        // Promena lekcije ili modula snima stanje i ažurira progres
-        lessonCheckboxes.forEach(cb => {
+        // Bilo koji klik se čuva u memoriji
+        allStateCheckboxes.forEach(cb => {
             cb.addEventListener('change', saveState);
         });
 
+        // Sprečavanje otvaranja/zatvaranja modula klikom na checkbox modula
         moduleCheckboxes.forEach(cb => {
-            cb.addEventListener('change', saveState);
-            
-            // Sprečavanje otvaranja/zatvaranja modula klikom na checkbox
             cb.addEventListener('click', (e) => {
                 e.stopPropagation();
             });
@@ -736,35 +1121,31 @@
             });
         });
 
-        // Dugme za resetovanje
+        // Modal i Reset Dugmad
         const resetButton = document.getElementById('reset-button');
         const resetModal = document.getElementById('reset-modal');
         const confirmResetBtn = document.getElementById('confirm-reset');
         const cancelResetBtn = document.getElementById('cancel-reset');
 
-        // Otvaranje modula
         resetButton.addEventListener('click', () => {
             resetModal.classList.add('active');
         });
 
-        // Zatvaranje modula na "Odustani"
         cancelResetBtn.addEventListener('click', () => {
             resetModal.classList.remove('active');
         });
 
-        // Potvrda reseta
         confirmResetBtn.addEventListener('click', () => {
             // Brisanje memorije
             localStorage.removeItem(STORAGE_KEY);
             
-            // Poništavanje svih kvačica u DOM-u
-            lessonCheckboxes.forEach(cb => cb.checked = false);
-            moduleCheckboxes.forEach(cb => cb.checked = false);
+            // Poništavanje svih kvačica (Lekcije, Moduli, Arhiva, Status)
+            allStateCheckboxes.forEach(cb => cb.checked = false);
             
             // Ažuriranje statusa
             updateProgress();
             
-            // Zatvaranje svih modula vizuelno (opciono, ali izgleda urednije)
+            // Zatvaranje svih modula
             document.querySelectorAll('.module').forEach(mod => mod.classList.remove('open'));
             
             // Sakrivanje modala
