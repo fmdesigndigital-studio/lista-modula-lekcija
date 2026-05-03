@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masterbox 2.0 - Ček lista</title>
+    <title>Masterbox 2.0 - Ček lista lekcija</title>
     <style>
-        /* Modern & Minimalist Reset and Variables */
         :root {
-            --bg-color: #f8f9fa;
-            --container-bg: #ffffff;
-            --text-main: #212529;
-            --text-muted: #6c757d;
-            --accent-color: #0d6efd;
-            --accent-hover: #0b5ed7;
-            --success-color: #198754;
-            --border-color: #dee2e6;
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --module-bg: #f8f9fa;
+            --module-border: #e0e0e0;
+            --accent-color: #0066cc; /* Plava za modul u izradi */
+            --success-color: #28a745; /* Zelena za završene lekcije */
+            --progress-bg: #e9ecef;
             --font-family: Arial, Helvetica, sans-serif;
         }
 
@@ -26,632 +24,757 @@
 
         body {
             font-family: var(--font-family);
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: #f4f5f7;
+            color: var(--text-color);
             line-height: 1.6;
-            padding: 20px;
+            padding-bottom: 50px;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
-            background-color: var(--container-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-            padding-bottom: 30px;
+            background: var(--bg-color);
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            padding: 30px;
         }
 
-        /* Header & Progress Bar */
-        .header {
-            padding: 40px 40px 20px;
+        /* Header i Progres Bar */
+        .page-header {
             text-align: center;
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-            z-index: 100;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--module-border);
         }
 
-        .header h1 {
-            font-size: 24px;
+        .page-title {
+            font-size: 28px;
             font-weight: bold;
-            margin-bottom: 10px;
-            color: var(--text-main);
-            letter-spacing: -0.5px;
+            margin-bottom: 5px;
+            color: #111;
         }
 
-        .header p {
-            color: var(--text-muted);
+        .page-subtitle {
             font-size: 16px;
+            color: #666;
             margin-bottom: 25px;
         }
 
         .progress-container {
-            width: 100%;
-            background-color: #e9ecef;
-            border-radius: 20px;
-            height: 12px;
-            overflow: hidden;
-            margin-bottom: 10px;
+            position: sticky;
+            top: 0;
+            background: var(--bg-color);
+            padding: 15px 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--module-border);
+            margin-bottom: 30px;
         }
 
-        .progress-bar {
-            height: 100%;
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .progress-bar-bg {
+            background-color: var(--progress-bg);
+            border-radius: 10px;
+            height: 12px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
             background-color: var(--success-color);
+            height: 100%;
             width: 0%;
+            border-radius: 10px;
             transition: width 0.4s ease;
         }
 
-        .progress-text {
-            font-size: 14px;
-            font-weight: bold;
-            color: var(--success-color);
-        }
-
-        /* Checklist Content */
-        .content {
-            padding: 30px 40px;
-        }
-
+        /* Moduli */
         .module {
-            margin-bottom: 20px;
-            border: 1px solid var(--border-color);
+            margin-bottom: 15px;
+            border: 1px solid var(--module-border);
             border-radius: 8px;
             overflow: hidden;
-            background-color: var(--container-bg);
+            background: #fff;
         }
 
         .module-header {
+            background-color: var(--module-bg);
+            padding: 15px 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 16px 20px;
             cursor: pointer;
-            background-color: #f8f9fa;
-            transition: background-color 0.2s ease;
+            user-select: none;
+            transition: background-color 0.2s;
         }
 
         .module-header:hover {
-            background-color: #e9ecef;
+            background-color: #f1f3f5;
         }
 
         .module-title {
-            font-size: 16px;
+            flex-grow: 1;
             font-weight: bold;
-            color: var(--text-main);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin: 0;
+            font-size: 16px;
+            margin-left: 15px;
+            color: #222;
         }
 
-        .module-toggle-icon {
-            font-size: 14px;
-            color: var(--text-muted);
+        .arrow {
             transition: transform 0.3s ease;
+            color: #666;
+            font-size: 14px;
         }
 
-        .module.open .module-toggle-icon {
+        /* Klasa za otvoreni modul */
+        .module.open .arrow {
             transform: rotate(180deg);
-        }
-
-        .module-content {
-            display: none;
-            padding: 15px 20px 20px;
-            border-top: 1px solid var(--border-color);
         }
 
         .module.open .module-content {
             display: block;
         }
 
-        .lesson-list {
-            list-style: none;
+        .module-content {
+            display: none; /* Skriveno po automatizmu */
+            padding: 10px 20px 20px 50px;
+            border-top: 1px solid var(--module-border);
         }
 
-        .lesson-item {
+        /* Lekcije */
+        .lesson {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 12px;
-            padding: 8px 10px;
-            border-radius: 8px;
-            transition: background-color 0.2s ease;
-        }
-
-        .lesson-item:hover {
-            background-color: #f1f3f5;
-        }
-
-        .lesson-checkbox {
-            appearance: none;
-            -webkit-appearance: none;
-            width: 22px;
-            height: 22px;
-            border: 2px solid var(--border-color);
-            border-radius: 4px;
-            margin-right: 15px;
-            margin-top: 2px;
+            padding: 10px 0;
             cursor: pointer;
-            position: relative;
+            border-bottom: 1px solid #f0f0f0;
+            transition: opacity 0.2s;
+        }
+
+        .lesson:last-child {
+            border-bottom: none;
+        }
+
+        .lesson:hover {
+            opacity: 0.8;
+        }
+
+        .lesson-text {
+            margin-left: 12px;
+            font-size: 15px;
+            color: #444;
+            user-select: none;
+        }
+
+        /* Prilagođeni Checkboxovi (Zajednički stilovi) */
+        input[type="checkbox"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background-color: #fff;
+            margin: 0;
+            font: inherit;
+            display: grid;
+            place-content: center;
+            cursor: pointer;
             flex-shrink: 0;
-            transition: all 0.2s ease;
+        }
+
+        input[type="checkbox"]::before {
+            content: "";
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em white;
+            transform-origin: center;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
+
+        input[type="checkbox"]:checked::before {
+            transform: scale(1);
+        }
+
+        /* Module Checkbox - Plavi, veći, zaobljeniji */
+        .module-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #adb5bd;
+            border-radius: 6px;
+        }
+
+        .module-checkbox:checked {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .module-checkbox::before {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Lesson Checkbox - Zeleni, manji, standardni */
+        .lesson-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ced4da;
+            border-radius: 4px;
+            margin-top: 2px;
         }
 
         .lesson-checkbox:checked {
             background-color: var(--success-color);
             border-color: var(--success-color);
         }
-
-        .lesson-checkbox:checked::after {
-            content: '✔';
-            position: absolute;
-            color: white;
-            font-size: 14px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .lesson-label {
-            cursor: pointer;
-            font-size: 16px;
-            color: #495057;
-            user-select: none;
-            transition: color 0.2s ease;
-            line-height: 1.4;
-        }
-
-        .lesson-checkbox:checked + .lesson-label {
-            color: var(--text-muted);
+        
+        .lesson-checkbox:checked + .lesson-text {
             text-decoration: line-through;
+            color: #999;
         }
 
-        /* Buttons & Footer */
-        .actions {
+        .lesson-checkbox::before {
+            width: 12px;
+            height: 12px;
+        }
+
+        /* Dugme i Footer */
+        .reset-btn-container {
+            margin-top: 50px;
             text-align: center;
-            padding: 20px 40px 40px;
-            border-top: 1px dashed var(--border-color);
-            margin-top: 20px;
+            padding-top: 30px;
+            border-top: 1px solid var(--module-border);
         }
 
-        .btn-reset {
-            background-color: transparent;
-            color: var(--text-muted);
-            border: 2px solid var(--border-color);
+        .reset-btn {
+            background-color: #fff;
+            color: #dc3545;
+            border: 2px solid #dc3545;
             padding: 12px 24px;
             font-size: 16px;
             font-weight: bold;
-            border-radius: 30px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
             font-family: var(--font-family);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        .btn-reset:hover {
+        .reset-btn:hover {
             background-color: #dc3545;
-            color: white;
-            border-color: #dc3545;
+            color: #fff;
         }
 
         .footer {
+            margin-top: 40px;
             text-align: center;
-            margin-top: 30px;
-            padding-bottom: 20px;
-        }
-
-        .footer p {
             font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 5px;
+            color: #777;
+            line-height: 1.8;
         }
 
-        .footer .highlight {
+        /* Modal stilovi */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .modal-content h3 {
+            margin-bottom: 15px;
+            color: #222;
+        }
+        .modal-content p {
+            margin-bottom: 20px;
+            color: #555;
+            font-size: 15px;
+        }
+        .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .modal-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
             font-weight: bold;
-            color: var(--text-main);
+            font-size: 15px;
+            transition: opacity 0.2s;
+        }
+        .modal-btn:hover {
+            opacity: 0.8;
+        }
+        .cancel-btn {
+            background: #e9ecef;
+            color: #333;
+        }
+        .confirm-btn {
+            background: #dc3545;
+            color: #fff;
         }
 
         @media (max-width: 600px) {
-            .header, .content, .actions {
-                padding-left: 20px;
-                padding-right: 20px;
-            }
-            .header h1 {
-                font-size: 20px;
-            }
+            .container { padding: 15px; }
+            .module-content { padding-left: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Header & Progress Bar -->
-        <div class="header">
-            <h1>Digitalni marketing 2026 - MASTERBOX 2.0</h1>
-            <p>Sadržaj: 12 Modula - 151 Lekcija</p>
-            
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
-            <div class="progress-text" id="progressText">0% (0/151)</div>
-        </div>
+<div class="container">
+    <div class="page-header">
+        <h1 class="page-title">Digitalni marketing 2026 - MASTERBOX 2.0</h1>
+        <div class="page-subtitle">Sadržaj: 12 Modula - 151 Lekcija</div>
+    </div>
 
-        <!-- Checklist Content -->
-        <div class="content" id="checklistContainer">
-            <!-- Sadržaj se generiše putem JavaScript-a -->
+    <div class="progress-container">
+        <div class="progress-header">
+            <span>Tvoj napredak:</span>
+            <span id="progress-text">0% (0/151)</span>
         </div>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+    </div>
 
-        <!-- Reset Action -->
-        <div class="actions">
-            <button class="btn-reset" id="resetBtn">
-                🔄 Resetuj ček listu za novi Projekat
-            </button>
+    <!-- Generisani sadržaj počinje ovde -->
+
+    <div class="module">
+        <div class="module-header">
+            <input type="checkbox" class="module-checkbox" id="m1">
+            <div class="module-title">MODUL: 0100 KAKO NAPRAVITI DOBRU REKLAMU</div>
+            <div class="arrow">▼</div>
         </div>
+        <div class="module-content">
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0101"><span class="lesson-text">0101 Kako napraviti dobru reklamu: Uvod</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0102"><span class="lesson-text">0102 UAVE - tajni metod Istoka Pavlovića za savršenu reklamu</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0103"><span class="lesson-text">0103 Primer: Butik Reels Masterclass</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0104"><span class="lesson-text">0104 Sparrow reklama koja je zaradila milion evra</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0105"><span class="lesson-text">0105 Jeat Meals: 200% povećana cela firma zbog jednog videa</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0106"><span class="lesson-text">0106 B Card: Hiljadu novih B2B klijenata od jednog videa</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0107"><span class="lesson-text">0107 Dijalog video doneo 220.000 evra prometa</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0108"><span class="lesson-text">0108 Zlatna haljina: vizuelni dokaz doneo 236.000 evra</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0109"><span class="lesson-text">0109 Vizuelni dokaz - najvažniji princip pored unikatnog ugla</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0110"><span class="lesson-text">0110 Kako početi video: Bilbord test</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0111"><span class="lesson-text">0111 Konkretizacija: subjekti, subjekti, subjekti</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0112"><span class="lesson-text">0112 Konsultacije sa Istokom i pomoć u radu</span></label>
+        </div>
+    </div>
+
+    <div class="module">
+        <div class="module-header">
+            <input type="checkbox" class="module-checkbox" id="m2">
+            <div class="module-title">MODUL: 0200 VEŠTAČKA INTELIGENCIJA U MARKETINGU</div>
+            <div class="arrow">▼</div>
+        </div>
+        <div class="module-content">
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0201"><span class="lesson-text">0201 Veštačka Inteligencija - pregled trenutno najboljih alata u marketingu</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0202"><span class="lesson-text">0202 Generisanje slike i videa: Med Zlato u Tegli</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0203"><span class="lesson-text">0203 Prvi i poslednji frejm: Med sa malinom</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0204"><span class="lesson-text">0204 Generisanje glasa na našem jeziku: Elevenlabs</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0205"><span class="lesson-text">0205 Reel za odeću: Sparrow komplet GRWM</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0206"><span class="lesson-text">0206 Generisanje muzike: Suno AI</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0207"><span class="lesson-text">0207 Cela reklama u AI: HighTicket Masterclass</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0208"><span class="lesson-text">0208 Cela reklama u AI: Porta Rai</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0209"><span class="lesson-text">0209 Zamena osobe: Muško u žensko i ostale kombinacije</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0210"><span class="lesson-text">0210 Primena AI u prezentacijama</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0211"><span class="lesson-text">0211 Primena AI u reelovima</span></label>
+        </div>
+    </div>
+
+    <div class="module">
+        <div class="module-header">
+            <input type="checkbox" class="module-checkbox" id="m3">
+            <div class="module-title">MODUL: 0300 META ADS: PUŠTANJE REKLAMA NA INSTAGRAMU I FEJSBUKU U 2026</div>
+            <div class="arrow">▼</div>
+        </div>
+        <div class="module-content">
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0301"><span class="lesson-text">0301 Uvod: Moji rezultati na Meta Ads</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0302"><span class="lesson-text">0302 Osnovni princip puštanja kampanje na Meti</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0303"><span class="lesson-text">0303 Puštanje jedne reklame od početka do kraja</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0304"><span class="lesson-text">0304 Tri nivoa kampanje i Ad Setovi</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0305"><span class="lesson-text">0305 Analiza rezultata</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0306"><span class="lesson-text">0306 Budžet - "koliko da stavim"</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0307"><span class="lesson-text">0307 PRVI PUT - podešavanje Ad Managera ako ga nikada niste koristili</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0308"><span class="lesson-text">0308 Custom Publika: Targetiranje ljudi koji nas stalno gledaju, a možda nisu zapratili</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0309"><span class="lesson-text">0309 Targertiranje Balkanaca u dijaspori</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0310"><span class="lesson-text">0310 Lookalike - nalaženje ljudi sličnih našim postojećim kupcima</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0311"><span class="lesson-text">0311 Lead kampanja - skupljanje kontakata na četiri načina</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0312"><span class="lesson-text">0312 ChatGPT kao pomoćnik za Meta Ads</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0313"><span class="lesson-text">0313 Kako se pravi dobra reklama</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0314"><span class="lesson-text">0314 Ideje za reklame od konkurencije: Foreplay i Meta Ads Library</span></label>
+        </div>
+    </div>
+
+    <div class="module">
+        <div class="module-header">
+            <input type="checkbox" class="module-checkbox" id="m4">
+            <div class="module-title">MODUL: 0400 CONTENT MARKETING I COPYWRITING (PISANJE ZA MARKETING)</div>
+            <div class="arrow">▼</div>
+        </div>
+        <div class="module-content">
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0401"><span class="lesson-text">0401 Uvod u Content Marketing</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0402"><span class="lesson-text">0402 Avatar Kupca</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0403"><span class="lesson-text">0403 Cilj iza Cilja</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0404"><span class="lesson-text">0404 Benefiti i "Pa Šta" test</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0405"><span class="lesson-text">0405 USP - Jedinstveni ugao celog brenda</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0406"><span class="lesson-text">0406 Primer reklame sa scenarijem - žvake</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0407"><span class="lesson-text">0407 Najčešće greške kod USP-a</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0408"><span class="lesson-text">0408 Slogani - loša ili dobra ideja?</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0409"><span class="lesson-text">0409 Druže, jesi li dobro? Najvažniji test u pisanju za marketing</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0410"><span class="lesson-text">0410 Pisanje opisa proizvoda - najvažnija lekcija OBAVEZNO GLEDAJ</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0411"><span class="lesson-text">0411 Stare reklame: odavde ćete naučiti mnogo</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0412"><span class="lesson-text">0412 Proxy native landing stranice</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0413"><span class="lesson-text">0413 Pisanje za Google: primer Montažne kuće, tekst koji se rankirao prvi</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0414"><span class="lesson-text">0414 Pisanje liste</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0415"><span class="lesson-text">0415 Landing stranica u Elementoru - ceo tutorijal</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0416"><span class="lesson-text">0416 Content Strategija</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0417"><span class="lesson-text">0417 Content Marketing Plan</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0418"><span class="lesson-text">0418 Kreiranje scenarija iz knjiga i podcasta</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0419"><span class="lesson-text">0419 Puškice za pisanje</span></label>
+        </div>
+    </div>
+
+    <div class="module">
+        <div class="module-header">
+            <input type="checkbox" class="module-checkbox" id="m5">
+            <div class="module-title">MODUL: 0500 VIDEO MARKETING</div>
+            <div class="arrow">▼</div>
+        </div>
+        <div class="module-content">
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0501"><span class="lesson-text">0501 Filmski Jezik</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0502"><span class="lesson-text">0502 Vrste kadrova u filmskom jeziku</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0503"><span class="lesson-text">0503 Primer: Stanić, scenario i režija, Istok</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0504"><span class="lesson-text">0504 Kreiranje video reklame B Card</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0505"><span class="lesson-text">0505 CapCut montaža kompletan vodič</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0506"><span class="lesson-text">0506 Scenario za video i linija pažnje</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0507"><span class="lesson-text">0507 Primer: How2Fit</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0508"><span class="lesson-text">0508 Primer: Nutanix režija, Istok</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0509"><span class="lesson-text">0509 Longform video</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0510"><span class="lesson-text">0510 Snimanje sebe za lični brend</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0511"><span class="lesson-text">0511 Video Content Marketing Plan</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0512"><span class="lesson-text">0512 Palac Stoper u videu</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0513"><span class="lesson-text">0513 Početak koji zaustavlja skrol</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0514"><span class="lesson-text">0514 Skrolovanje feeda</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0515"><span class="lesson-text">0515 Scenario - primer stomatološke usluge</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0516"><span class="lesson-text">0516 Osnovni princip montaže</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0517"><span class="lesson-text">0517 Adobe Premiere tutorial</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0518"><span class="lesson-text">0518 Green Screen produkcija</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0519"><span class="lesson-text">0519 Kolor korekcija, grading i LUT-ovi</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0520"><span class="lesson-text">0520 Prirodni pokreti koji prijaju oku: Motion Graphics i Easing</span></label>
+        </div>
+    </div>
+
+    <div class="module">
+        <div class="module-header">
+            <input type="checkbox" class="module-checkbox" id="m6">
+            <div class="module-title">MODUL: 0600 OSNOVE DIGITALNOG MARKETINGA</div>
+            <div class="arrow">▼</div>
+        </div>
+        <div class="module-content">
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0601"><span class="lesson-text">0601 Prodajni levak - uvod</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0602"><span class="lesson-text">0602 Prodajni levak za online kupovinu</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0603"><span class="lesson-text">0603 Prodajni levak za generisanje leadova</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0604"><span class="lesson-text">0604 Retargeting Levak</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0605"><span class="lesson-text">0605 Ulazak u levak - namera i prekid</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0606"><span class="lesson-text">0606 Organski i plaćeni saobraćaj</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0607"><span class="lesson-text">0607 Hladan, Topli i Vrući saobraćaj</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0608"><span class="lesson-text">0608 Voće sa niskih grana</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0609"><span class="lesson-text">0609 Debug Kampanja</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0610"><span class="lesson-text">0610 Lestvica vrednosti</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0611"><span class="lesson-text">0611 Emocionalna lestvica vrednosti</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0612"><span class="lesson-text">0612 Lead magnet</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0613"><span class="lesson-text">0613 Najćešće greške u marketingu</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0614"><span class="lesson-text">0614 Love Organic Studija Slučaja</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0615"><span class="lesson-text">0615 Strongman studija slučaja</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0616"><span class="lesson-text">0616 Zamurović studija slučaja</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0617"><span class="lesson-text">0617 Kupujem prodajem levak</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0618"><span class="lesson-text">0618 Content marketing levak</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0619"><span class="lesson-text">0619 Shortform video levak</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0620"><span class="lesson-text">0620 Longform video levak</span></label>
+        </div>
+    </div>
+
+    <div class="module">
+        <div class="module-header">
+            <input type="checkbox" class="module-checkbox" id="m7">
+            <div class="module-title">MODUL: 0700 DIZAJN I ESTETIKA</div>
+            <div class="arrow">▼</div>
+        </div>
+        <div class="module-content">
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0701"><span class="lesson-text">0701 Šta nije dizajn</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0702"><span class="lesson-text">0702 Pet univerzalnih vrednosti dizajna</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0703"><span class="lesson-text">0703 Kontrast i jukstapozicija</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0704"><span class="lesson-text">0704 Ponavljanje i konzistencija</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0705"><span class="lesson-text">0705 Ravnanje</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0706"><span class="lesson-text">0706 Blizina i proximity</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0707"><span class="lesson-text">0707 Prazan prostor</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0708"><span class="lesson-text">0708 Tekst preko slike i videa - sublimacija</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0709"><span class="lesson-text">0709 Tipografija - uvod</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0710"><span class="lesson-text">0710 Tipografija - izbor fonta</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0711"><span class="lesson-text">0711 Tipografija i estetika uklapanja</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0712"><span class="lesson-text">0712 Estetika teksta preko slike</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0713"><span class="lesson-text">0713 Principi dizajna u primerima</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0714"><span class="lesson-text">0714 Psihologija boja</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0715"><span class="lesson-text">0715 Primena principa dizajna - vežba</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0716"><span class="lesson-text">0716 Photoshop za marketing</span></label>
+        </div>
+    </div>
+
+    <div class="module">
+        <div class="module-header">
+            <input type="checkbox" class="module-checkbox" id="m8">
+            <div class="module-title">MODUL: 0800 FOTOGRAFISANJE PROIZVODA</div>
+            <div class="arrow">▼</div>
+        </div>
+        <div class="module-content">
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0801"><span class="lesson-text">0801 Fotografisanje proizvoda</span></label>
+        </div>
+    </div>
+
+    <div class="module">
+        <div class="module-header">
+            <input type="checkbox" class="module-checkbox" id="m9">
+            <div class="module-title">MODUL: 0900 BREND I VIZUELNI IDENTITET</div>
+            <div class="arrow">▼</div>
+        </div>
+        <div class="module-content">
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0901"><span class="lesson-text">0901 Šta je brend</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0902"><span class="lesson-text">0902 Pozicioniranje brenda</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0903"><span class="lesson-text">0903 Šta sve može biti brend</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0904"><span class="lesson-text">0904 Brend vs Robna marka</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0905"><span class="lesson-text">0905 Histerezis poverenja i izdaje</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0906"><span class="lesson-text">0906 Analiza brendova na terenu</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0907"><span class="lesson-text">0907 Co Branding</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0908"><span class="lesson-text">0908 Kako se gradi brend</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0909"><span class="lesson-text">0909 Kreiranje imena brenda</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0910"><span class="lesson-text">0910 Vizuelni identitet</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l0911"><span class="lesson-text">0911 Logo brenda</span></label>
+        </div>
+    </div>
+
+    <div class="module">
+        <div class="module-header">
+            <input type="checkbox" class="module-checkbox" id="m10">
+            <div class="module-title">MODUL: 1000 FOTOGRAFIJA U MARKETINGU</div>
+            <div class="arrow">▼</div>
+        </div>
+        <div class="module-content">
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1001"><span class="lesson-text">1001 Svetlo</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1002"><span class="lesson-text">1002 Kontekst</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1003"><span class="lesson-text">1003 Kamera</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1004"><span class="lesson-text">1004 Boje</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1005"><span class="lesson-text">1005 Editovanje boja</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1006"><span class="lesson-text">1006 Napredno editovanje</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1007"><span class="lesson-text">1007 Scouting lokacije</span></label>
+        </div>
+    </div>
+
+    <div class="module">
+        <div class="module-header">
+            <input type="checkbox" class="module-checkbox" id="m11">
+            <div class="module-title">MODUL: 1100 EMAIL MARKETING</div>
+            <div class="arrow">▼</div>
+        </div>
+        <div class="module-content">
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1101"><span class="lesson-text">1101 Uvod u Email marketing</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1102"><span class="lesson-text">1102 Alati za email marketing</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1103"><span class="lesson-text">1103 Kako da email stigne u primarni Inbox</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1104"><span class="lesson-text">1104 Kako da ljudi otvor email - subject kao hook</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1105"><span class="lesson-text">1105 Trigerovanje odgovora i strategija prvog maila</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1106"><span class="lesson-text">1106 Telo maila</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1107"><span class="lesson-text">1107 Kako se koriste email alati</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1108"><span class="lesson-text">1108 GDPR</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1109"><span class="lesson-text">1109 Sekvence i drip kampanje</span></label>
+        </div>
+    </div>
+
+    <div class="module">
+        <div class="module-header">
+            <input type="checkbox" class="module-checkbox" id="m12">
+            <div class="module-title">MODUL: 1200 SEO</div>
+            <div class="arrow">▼</div>
+        </div>
+        <div class="module-content">
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1201"><span class="lesson-text">1201 Uvod u SEO</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1202"><span class="lesson-text">1202 Faktori rankiranja</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1203"><span class="lesson-text">1203 Istraživanje ključnih reči</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1204"><span class="lesson-text">1204 Content strategija za SEO</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1205"><span class="lesson-text">1205 Backlinkovi</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1206"><span class="lesson-text">1206 SEO i Retargeting</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1207"><span class="lesson-text">1207 Brzina sajta</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1208"><span class="lesson-text">1208 SEO za online shop</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1209"><span class="lesson-text">1209 SEO za usluge</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1210"><span class="lesson-text">1210 SEO za Google mape</span></label>
+            <label class="lesson"><input type="checkbox" class="lesson-checkbox" id="l1211"><span class="lesson-text">1211 Kreiranje SEO authority sajta</span></label>
+        </div>
+    </div>
+
+    <!-- Dugme za resetovanje celog projekta -->
+    <div class="reset-btn-container">
+        <button class="reset-btn" id="reset-button">🔄 Resetuj ček listu za novi Projekat</button>
     </div>
 
     <!-- Footer -->
     <div class="footer">
-        <p class="highlight">@2026 Fildeak Mihalj & FM DESIGN DIGITAL STUDIO</p>
-        <p>Korišćenjem digitalnih izdanja čuvamo prirodu!</p>
+        <div>@2026 Fildeak Mihalj & FM DESIGN DIGITAL STUDIO</div>
+        <div>Korišćenjem digitalnih izdanja čuvamo prirodu!</div>
     </div>
 
-    <script>
-        // Baza podataka svih modula i lekcija
-        const courseData = [
-            {
-                module: "MODUL: 0100 KAKO NAPRAVITI DOBRU REKLAMU",
-                lessons: [
-                    "0101 Kako napraviti dobru reklamu: Uvod",
-                    "0102 UAVE - tajni metod Istoka Pavlovića za savršenu reklamu",
-                    "0103 Primer: Butik Reels Masterclass",
-                    "0104 Sparrow reklama koja je zaradila milion evra",
-                    "0105 Jeat Meals: 200% povećana cela firma zbog jednog videa",
-                    "0106 B Card: Hiljadu novih B2B klijenata od jednog videa",
-                    "0107 Dijalog video doneo 220.000 evra prometa",
-                    "0108 Zlatna haljina: vizuelni dokaz doneo 236.000 evra",
-                    "0109 Vizuelni dokaz - najvažniji princip pored unikatnog ugla",
-                    "0110 Kako početi video: Bilbord test",
-                    "0111 Konkretizacija: subjekti, subjekti, subjekti",
-                    "0112 Konsultacije sa Istokom i pomoć u radu"
-                ]
-            },
-            {
-                module: "MODUL: 0200 VEŠTAČKA INTELIGENCIJA U MARKETINGU",
-                lessons: [
-                    "0201 Veštačka Inteligencija - pregled trenutno najboljih alata u marketingu",
-                    "0202 Generisanje slike i videa: Med Zlato u Tegli",
-                    "0203 Prvi i poslednji frejm: Med sa malinom",
-                    "0204 Generisanje glasa na našem jeziku: Elevenlabs",
-                    "0205 Reel za odeću: Sparrow komplet GRWM",
-                    "0206 Generisanje muzike: Suno AI",
-                    "0207 Cela reklama u AI: HighTicket Masterclass",
-                    "0208 Cela reklama u AI: Porta Rai",
-                    "0209 Zamena osobe: Muško u žensko i ostale kombinacije",
-                    "0210 Primena AI u prezentacijama",
-                    "0211 Primena AI u reelovima"
-                ]
-            },
-            {
-                module: "MODUL: 0300 META ADS: PUŠTANJE REKLAMA NA INSTAGRAMU I FEJSBUKU U 2026",
-                lessons: [
-                    "0301 Uvod: Moji rezultati na Meta Ads",
-                    "0302 Osnovni princip puštanja kampanje na Meti",
-                    "0303 Puštanje jedne reklame od početka do kraja",
-                    "0304 Tri nivoa kampanje i Ad Setovi",
-                    "0305 Analiza rezultata",
-                    "0306 Budžet - \"koliko da stavim\"",
-                    "0307 PRVI PUT - podešavanje Ad Managera ako ga nikada niste koristili",
-                    "0308 Custom Publika: Targetiranje ljudi koji nas stalno gledaju, a možda nisu zapratili",
-                    "0309 Targertiranje Balkanaca u dijaspori",
-                    "0310 Lookalike - nalaženje ljudi sličnih našim postojećim kupcima",
-                    "0311 Lead kampanja - skupljanje kontakata na četiri načina",
-                    "0312 ChatGPT kao pomoćnik za Meta Ads",
-                    "0313 Kako se pravi dobra reklama",
-                    "0314 Ideje za reklame od konkurencije: Foreplay i Meta Ads Library"
-                ]
-            },
-            {
-                module: "MODUL: 0400 CONTENT MARKETING I COPYWRITING (PISANJE ZA MARKETING)",
-                lessons: [
-                    "0401 Uvod u Content Marketing",
-                    "0402 Avatar Kupca",
-                    "0403 Cilj iza Cilja",
-                    "0404 Benefiti i \"Pa Šta\" test",
-                    "0405 USP - Jedinstveni ugao celog brenda",
-                    "0406 Primer reklame sa scenarijem - žvake",
-                    "0407 Najčešće greške kod USP-a",
-                    "0408 Slogani - loša ili dobra ideja?",
-                    "0409 Druže, jesi li dobro? Najvažniji test u pisanju za marketing",
-                    "0410 Pisanje opisa proizvoda - najvažnija lekcija OBAVEZNO GLEDAJ",
-                    "0411 Stare reklame: odavde ćete naučiti mnogo",
-                    "0412 Proxy native landing stranice",
-                    "0413 Pisanje za Google: primer Montažne kuće, tekst koji se rankirao prvi",
-                    "0414 Pisanje liste",
-                    "0415 Landing stranica u Elementoru - ceo tutorijal",
-                    "0416 Content Strategija",
-                    "0417 Content Marketing Plan",
-                    "0418 Kreiranje scenarija iz knjiga i podcasta",
-                    "0419 Puškice za pisanje"
-                ]
-            },
-            {
-                module: "MODUL: 0500 VIDEO MARKETING",
-                lessons: [
-                    "0501 Filmski Jezik",
-                    "0502 Vrste kadrova u filmskom jeziku",
-                    "0503 Primer: Stanić, scenario i režija, Istok",
-                    "0504 Kreiranje video reklame B Card",
-                    "0505 CapCut montaža kompletan vodič",
-                    "0506 Scenario za video i linija pažnje",
-                    "0507 Primer: How2Fit",
-                    "0508 Primer: Nutanix režija, Istok",
-                    "0509 Longform video",
-                    "0510 Snimanje sebe za lični brend",
-                    "0511 Video Content Marketing Plan",
-                    "0512 Palac Stoper u videu",
-                    "0513 Početak koji zaustavlja skrol",
-                    "0514 Skrolovanje feeda",
-                    "0515 Scenario - primer stomatološke usluge",
-                    "0516 Osnovni princip montaže",
-                    "0517 Adobe Premiere tutorial",
-                    "0518 Green Screen produkcija",
-                    "0519 Kolor korekcija, grading i LUT-ovi",
-                    "0520 Prirodni pokreti koji prijaju oku: Motion Graphics i Easing"
-                ]
-            },
-            {
-                module: "MODUL: 0600 OSNOVE DIGITALNOG MARKETINGA",
-                lessons: [
-                    "0601 Prodajni levak - uvod",
-                    "0602 Prodajni levak za online kupovinu",
-                    "0603 Prodajni levak za generisanje leadova",
-                    "0604 Retargeting Levak",
-                    "0605 Ulazak u levak - namera i prekid",
-                    "0606 Organski i plaćeni saobraćaj",
-                    "0607 Hladan, Topli i Vrući saobraćaj",
-                    "0608 Voće sa niskih grana",
-                    "0609 Debug Kampanja",
-                    "0610 Lestvica vrednosti",
-                    "0611 Emocionalna lestvica vrednosti",
-                    "0612 Lead magnet",
-                    "0613 Najćešće greške u marketingu",
-                    "0614 Love Organic Studija Slučaja",
-                    "0615 Strongman studija slučaja",
-                    "0616 Zamurović studija slučaja",
-                    "0617 Kupujem prodajem levak",
-                    "0618 Content marketing levak",
-                    "0619 Shortform video levak",
-                    "0620 Longform video levak"
-                ]
-            },
-            {
-                module: "MODUL: 0700 DIZAJN I ESTETIKA",
-                lessons: [
-                    "0701 Šta nije dizajn",
-                    "0702 Pet univerzalnih vrednosti dizajna",
-                    "0703 Kontrast i jukstapozicija",
-                    "0704 Ponavljanje i konzistencija",
-                    "0705 Ravnanje",
-                    "0706 Blizina i proximity",
-                    "0707 Prazan prostor",
-                    "0708 Tekst preko slike i videa - sublimacija",
-                    "0709 Tipografija - uvod",
-                    "0710 Tipografija - izbor fonta",
-                    "0711 Tipografija i estetika uklapanja",
-                    "0712 Estetika teksta preko slike",
-                    "0713 Principi dizajna u primerima",
-                    "0714 Psihologija boja",
-                    "0715 Primena principa dizajna - vežba",
-                    "0716 Photoshop za marketing"
-                ]
-            },
-            {
-                module: "MODUL: 0800 FOTOGRAFISANJE PROIZVODA",
-                lessons: [
-                    "0801 Fotografisanje proizvoda"
-                ]
-            },
-            {
-                module: "MODUL: 0900 BREND I VIZUELNI IDENTITET",
-                lessons: [
-                    "0901 Šta je brend",
-                    "0902 Pozicioniranje brenda",
-                    "0903 Šta sve može biti brend",
-                    "0904 Brend vs Robna marka",
-                    "0905 Histerezis poverenja i izdaje",
-                    "0906 Analiza brendova na terenu",
-                    "0907 Co Branding",
-                    "0908 Kako se gradi brend",
-                    "0909 Kreiranje imena brenda",
-                    "0910 Vizuelni identitet",
-                    "0911 Logo brenda"
-                ]
-            },
-            {
-                module: "MODUL: 1000 FOTOGRAFIJA U MARKETINGU",
-                lessons: [
-                    "1001 Svetlo",
-                    "1002 Kontekst",
-                    "1003 Kamera",
-                    "1004 Boje",
-                    "1005 Editovanje boja",
-                    "1006 Napredno editovanje",
-                    "1007 Scouting lokacije"
-                ]
-            },
-            {
-                module: "MODUL: 1100 EMAIL MARKETING",
-                lessons: [
-                    "1101 Uvod u Email marketing",
-                    "1102 Alati za email marketing",
-                    "1103 Kako da email stigne u primarni Inbox",
-                    "1104 Kako da ljudi otvor email - subject kao hook",
-                    "1105 Trigerovanje odgovora i strategija prvog maila",
-                    "1106 Telo maila",
-                    "1107 Kako se koriste email alati",
-                    "1108 GDPR",
-                    "1109 Sekvence i drip kampanje"
-                ]
-            },
-            {
-                module: "MODUL: 1200 SEO",
-                lessons: [
-                    "1201 Uvod u SEO",
-                    "1202 Faktori rankiranja",
-                    "1203 Istraživanje ključnih reči",
-                    "1204 Content strategija za SEO",
-                    "1205 Backlinkovi",
-                    "1206 SEO i Retargeting",
-                    "1207 Brzina sajta",
-                    "1208 SEO za online shop",
-                    "1209 SEO za usluge",
-                    "1210 SEO za Google mape",
-                    "1211 Kreiranje SEO authority sajta"
-                ]
-            }
-        ];
+</div>
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const container = document.getElementById('checklistContainer');
-            const progressBar = document.getElementById('progressBar');
-            const progressText = document.getElementById('progressText');
-            const resetBtn = document.getElementById('resetBtn');
-            const STORAGE_KEY = 'masterbox_2026_progress';
+<!-- Modal za potvrdu reseta -->
+<div id="reset-modal" class="modal-overlay">
+    <div class="modal-content">
+        <h3>Potvrda reseta</h3>
+        <p>Da li si siguran da želiš da obrišeš sav dosadašnji napredak? Ovo će resetovati ček listu nazad na 0% i spremiti je za novi projekat.</p>
+        <div class="modal-buttons">
+            <button id="cancel-reset" class="modal-btn cancel-btn">Odustani</button>
+            <button id="confirm-reset" class="modal-btn confirm-btn">Da, resetuj</button>
+        </div>
+    </div>
+</div>
 
-            let totalLessons = 0;
-            let checkedLessons = 0;
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const STORAGE_KEY = "masterbox_checklist_v1";
+        const lessonCheckboxes = document.querySelectorAll('.lesson-checkbox');
+        const moduleCheckboxes = document.querySelectorAll('.module-checkbox');
+        const progressFill = document.getElementById('progress-fill');
+        const progressText = document.getElementById('progress-text');
+        const totalLessons = lessonCheckboxes.length; // Biće 151
 
-            // Učitavanje memorisanog stanja iz localStorage
+        // Učitavanje iz localStorage-a
+        function loadState() {
             const savedState = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-
-            // Renderovanje HTML strukture iz baze podataka
-            courseData.forEach((mod, moduleIndex) => {
-                // Kreiraj div za Modul
-                const moduleDiv = document.createElement('div');
-                moduleDiv.className = 'module';
-                
-                // --- HEADER (Klikabilni deo za otvaranje menija) ---
-                const moduleHeader = document.createElement('div');
-                moduleHeader.className = 'module-header';
-                
-                const moduleTitle = document.createElement('h2');
-                moduleTitle.className = 'module-title';
-                moduleTitle.textContent = mod.module;
-
-                const toggleIcon = document.createElement('span');
-                toggleIcon.className = 'module-toggle-icon';
-                toggleIcon.innerHTML = '▼'; // Strelica
-
-                moduleHeader.appendChild(moduleTitle);
-                moduleHeader.appendChild(toggleIcon);
-                moduleDiv.appendChild(moduleHeader);
-
-                // --- CONTENT (Sakriveni deo sa lekcijama) ---
-                const moduleContent = document.createElement('div');
-                moduleContent.className = 'module-content';
-
-                // Lista lekcija
-                const lessonList = document.createElement('ul');
-                lessonList.className = 'lesson-list';
-
-                mod.lessons.forEach((lessonName, lessonIndex) => {
-                    totalLessons++;
-                    const lessonId = `lesson-${moduleIndex}-${lessonIndex}`;
-                    const isChecked = savedState[lessonId] === true;
-
-                    if (isChecked) {
-                        checkedLessons++;
-                    }
-
-                    const li = document.createElement('li');
-                    li.className = 'lesson-item';
-
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.id = lessonId;
-                    checkbox.className = 'lesson-checkbox';
-                    checkbox.checked = isChecked;
-
-                    const label = document.createElement('label');
-                    label.htmlFor = lessonId;
-                    label.className = 'lesson-label';
-                    label.textContent = lessonName;
-
-                    // Event listener za ažuriranje stanja i progres bara
-                    checkbox.addEventListener('change', (e) => {
-                        const checked = e.target.checked;
-                        
-                        // Ažuriraj stanje u memoriji
-                        savedState[lessonId] = checked;
-                        localStorage.setItem(STORAGE_KEY, JSON.stringify(savedState));
-
-                        // Ažuriraj brojčanik
-                        checkedLessons += checked ? 1 : -1;
-                        updateProgress();
-                    });
-
-                    li.appendChild(checkbox);
-                    li.appendChild(label);
-                    lessonList.appendChild(li);
-                });
-
-                moduleContent.appendChild(lessonList);
-                moduleDiv.appendChild(moduleContent);
-                container.appendChild(moduleDiv);
-
-                // --- LOGIKA ZA OTVARANJE/ZATVARANJE MODULA ---
-                moduleHeader.addEventListener('click', () => {
-                    moduleDiv.classList.toggle('open');
-                });
+            
+            // Lekcije
+            lessonCheckboxes.forEach(cb => {
+                if (savedState[cb.id]) {
+                    cb.checked = true;
+                }
             });
 
-            // Funkcija za osvežavanje progres bara
-            function updateProgress() {
-                const percentage = totalLessons === 0 ? 0 : Math.round((checkedLessons / totalLessons) * 100);
-                progressBar.style.width = `${percentage}%`;
-                progressText.textContent = `${percentage}% (${checkedLessons}/${totalLessons})`;
-
-                // Menjanje boje progres bara ako je 100%
-                if(percentage === 100) {
-                    progressBar.style.backgroundColor = '#0d6efd'; // Plava boja kad se završi sve
-                    progressText.style.color = '#0d6efd';
-                    progressText.textContent = `100% - ČESTITAMO! SVE JE ZAVRŠENO! (${checkedLessons}/${totalLessons})`;
-                } else {
-                    progressBar.style.backgroundColor = 'var(--success-color)';
-                    progressText.style.color = 'var(--success-color)';
+            // Moduli (oznake izrade)
+            moduleCheckboxes.forEach(cb => {
+                if (savedState[cb.id]) {
+                    cb.checked = true;
                 }
-            }
+            });
 
-            // Prikaz početnog progresa pri učitavanju
             updateProgress();
+        }
 
-            // Funkcionalnost za dugme Reset
-            resetBtn.addEventListener('click', () => {
-                const confirmReset = confirm("Da li ste sigurni da želite da resetujete sav napredak?\nOva akcija će obrisati sve vaše kvačice i vratiti progres na 0%.");
-                
-                if (confirmReset) {
-                    // Očisti localStorage
-                    localStorage.removeItem(STORAGE_KEY);
-                    
-                    // Očisti memorijski objekat
-                    for (let key in savedState) {
-                        delete savedState[key];
-                    }
+        // Čuvanje u localStorage-u
+        function saveState() {
+            const state = {};
+            
+            lessonCheckboxes.forEach(cb => {
+                if (cb.checked) state[cb.id] = true;
+            });
 
-                    // Odčekiraj sve vizuelno
-                    document.querySelectorAll('.lesson-checkbox').forEach(cb => {
-                        cb.checked = false;
-                    });
+            moduleCheckboxes.forEach(cb => {
+                if (cb.checked) state[cb.id] = true;
+            });
 
-                    // Resetuj brojčanik
-                    checkedLessons = 0;
-                    updateProgress();
-                }
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            updateProgress();
+        }
+
+        // Ažuriranje trake napretka (Progres bar)
+        function updateProgress() {
+            let checkedLessons = 0;
+            lessonCheckboxes.forEach(cb => {
+                if (cb.checked) checkedLessons++;
+            });
+
+            const percentage = Math.round((checkedLessons / totalLessons) * 100);
+            
+            progressFill.style.width = percentage + "%";
+            progressText.innerText = `${percentage}% (${checkedLessons}/${totalLessons})`;
+        }
+
+        // --- DOGAĐAJI (EVENT LISTENERS) ---
+
+        // Promena lekcije ili modula snima stanje i ažurira progres
+        lessonCheckboxes.forEach(cb => {
+            cb.addEventListener('change', saveState);
+        });
+
+        moduleCheckboxes.forEach(cb => {
+            cb.addEventListener('change', saveState);
+            
+            // Sprečavanje otvaranja/zatvaranja modula klikom na checkbox
+            cb.addEventListener('click', (e) => {
+                e.stopPropagation();
             });
         });
-    </script>
+
+        // Logika za otvaranje i zatvaranje modula (Accordion)
+        const moduleHeaders = document.querySelectorAll('.module-header');
+        moduleHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const moduleParent = header.parentElement;
+                moduleParent.classList.toggle('open');
+            });
+        });
+
+        // Dugme za resetovanje
+        const resetButton = document.getElementById('reset-button');
+        const resetModal = document.getElementById('reset-modal');
+        const confirmResetBtn = document.getElementById('confirm-reset');
+        const cancelResetBtn = document.getElementById('cancel-reset');
+
+        // Otvaranje modula
+        resetButton.addEventListener('click', () => {
+            resetModal.classList.add('active');
+        });
+
+        // Zatvaranje modula na "Odustani"
+        cancelResetBtn.addEventListener('click', () => {
+            resetModal.classList.remove('active');
+        });
+
+        // Potvrda reseta
+        confirmResetBtn.addEventListener('click', () => {
+            // Brisanje memorije
+            localStorage.removeItem(STORAGE_KEY);
+            
+            // Poništavanje svih kvačica u DOM-u
+            lessonCheckboxes.forEach(cb => cb.checked = false);
+            moduleCheckboxes.forEach(cb => cb.checked = false);
+            
+            // Ažuriranje statusa
+            updateProgress();
+            
+            // Zatvaranje svih modula vizuelno (opciono, ali izgleda urednije)
+            document.querySelectorAll('.module').forEach(mod => mod.classList.remove('open'));
+            
+            // Sakrivanje modala
+            resetModal.classList.remove('active');
+        });
+
+        // Inicijalizacija pri učitavanju
+        loadState();
+    });
+</script>
+
 </body>
 </html>
