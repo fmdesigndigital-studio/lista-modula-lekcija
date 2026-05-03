@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masterbox 2.0 - Ček lista</title>
+    <style>
+        /* Modern & Minimalist Reset and Variables */
+        :root {
+            --bg-color: #f8f9fa;
+            --container-bg: #ffffff;
+            --text-main: #212529;
+            --text-muted: #6c757d;
+            --accent-color: #0d6efd;
+            --accent-hover: #0b5ed7;
+            --success-color: #198754;
+            --border-color: #dee2e6;
+            --font-family: Arial, Helvetica, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--container-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            padding-bottom: 30px;
+        }
+
+        /* Header & Progress Bar */
+        .header {
+            padding: 40px 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #e9ecef;
+            border-radius: 20px;
+            height: 12px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--success-color);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--success-color);
+        }
+
+        /* Checklist Content */
+        .content {
+            padding: 30px 40px;
+        }
+
+        .module {
+            margin-bottom: 40px;
+        }
+
+        .module-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-main);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .lesson-list {
+            list-style: none;
+        }
+
+        .lesson-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .lesson-item:hover {
+            background-color: #f1f3f5;
+        }
+
+        .lesson-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            margin-right: 15px;
+            margin-top: 2px;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .lesson-checkbox:checked {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+        }
+
+        .lesson-checkbox:checked::after {
+            content: '✔';
+            position: absolute;
+            color: white;
+            font-size: 14px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .lesson-label {
+            cursor: pointer;
+            font-size: 16px;
+            color: #495057;
+            user-select: none;
+            transition: color 0.2s ease;
+            line-height: 1.4;
+        }
+
+        .lesson-checkbox:checked + .lesson-label {
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+
+        /* Buttons & Footer */
+        .actions {
+            text-align: center;
+            padding: 20px 40px 40px;
+            border-top: 1px dashed var(--border-color);
+            margin-top: 20px;
+        }
+
+        .btn-reset {
+            background-color: transparent;
+            color: var(--text-muted);
+            border: 2px solid var(--border-color);
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-family);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-reset:hover {
+            background-color: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-bottom: 20px;
+        }
+
+        .footer p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .footer .highlight {
+            font-weight: bold;
+            color: var(--text-main);
+        }
+
+        @media (max-width: 600px) {
+            .header, .content, .actions {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            .header h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header & Progress Bar -->
+        <div class="header">
+            <h1>Digitalni marketing 2026 - MASTERBOX 2.0</h1>
+            <p>Sadržaj: 12 Modula - 151 Lekcija</p>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="progress-text" id="progressText">0% (0/151)</div>
+        </div>
+
+        <!-- Checklist Content -->
+        <div class="content" id="checklistContainer">
+            <!-- Sadržaj se generiše putem JavaScript-a -->
+        </div>
+
+        <!-- Reset Action -->
+        <div class="actions">
+            <button class="btn-reset" id="resetBtn">
+                🔄 Resetuj ček listu za novi Projekat
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p class="highlight">@2026 Fildeak Mihalj & FM DESIGN DIGITAL STUDIO</p>
+        <p>Korišćenjem digitalnih izdanja čuvamo prirodu!</p>
+    </div>
+
+    <script>
+        // Baza podataka svih modula i lekcija
+        const courseData = [
+            {
+                module: "MODUL: 0100 KAKO NAPRAVITI DOBRU REKLAMU",
+                lessons: [
+                    "0101 Kako napraviti dobru reklamu: Uvod",
+                    "0102 UAVE - tajni metod Istoka Pavlovića za savršenu reklamu",
+                    "0103 Primer: Butik Reels Masterclass",
+                    "0104 Sparrow reklama koja je zaradila milion evra",
+                    "0105 Jeat Meals: 200% povećana cela firma zbog jednog videa",
+                    "0106 B Card: Hiljadu novih B2B klijenata od jednog videa",
+                    "0107 Dijalog video doneo 220.000 evra prometa",
+                    "0108 Zlatna haljina: vizuelni dokaz doneo 236.000 evra",
+                    "0109 Vizuelni dokaz - najvažniji princip pored unikatnog ugla",
+                    "0110 Kako početi video: Bilbord test",
+                    "0111 Konkretizacija: subjekti, subjekti, subjekti",
+                    "0112 Konsultacije sa Istokom i pomoć u radu"
+                ]
+            },
+            {
+                module: "MODUL: 0200 VEŠTAČKA INTELIGENCIJA U MARKETINGU",
+                lessons: [
+                    "0201 Veštačka Inteligencija - pregled trenutno najboljih alata u marketingu",
+                    "0202 Generisanje slike i videa: Med Zlato u Tegli",
+                    "0203 Prvi i poslednji frejm: Med sa malinom",
+                    "0204 Generisanje glasa na našem jeziku: Elevenlabs",
+                    "0205 Reel za odeću: Sparrow komplet GRWM",
+                    "0206 Generisanje muzike: Suno AI",
+                    "0207 Cela reklama u AI: HighTicket Masterclass",
+                    "0208 Cela reklama u AI: Porta Rai",
+                    "0209 Zamena osobe: Muško u žensko i ostale kombinacije",
+                    "0210 Primena AI u prezentacijama",
+                    "0211 Primena AI u reelovima"
+                ]
+            },
+            {
+                module: "MODUL: 0300 META ADS: PUŠTANJE REKLAMA NA INSTAGRAMU I FEJSBUKU U 2026",
+                lessons: [
+                    "0301 Uvod: Moji rezultati na Meta Ads",
+                    "0302 Osnovni princip puštanja kampanje na Meti",
+                    "0303 Puštanje jedne reklame od početka do kraja",
+                    "0304 Tri nivoa kampanje i Ad Setovi",
+                    "0305 Analiza rezultata",
+                    "0306 Budžet - \"koliko da stavim\"",
+                    "0307 PRVI PUT - podešavanje Ad Managera ako ga nikada niste koristili",
+                    "0308 Custom Publika: Targetiranje ljudi koji nas stalno gledaju, a možda nisu zapratili",
+                    "0309 Targertiranje Balkanaca u dijaspori",
+                    "0310 Lookalike - nalaženje ljudi sličnih našim postojećim kupcima",
+                    "0311 Lead kampanja - skupljanje kontakata na četiri načina",
+                    "0312 ChatGPT kao pomoćnik za Meta Ads",
+                    "0313 Kako se pravi dobra reklama",
+                    "0314 Ideje za reklame od konkurencije: Foreplay i Meta Ads Library"
+                ]
+            },
+            {
+                module: "MODUL: 0400 CONTENT MARKETING I COPYWRITING (PISANJE ZA MARKETING)",
+                lessons: [
+                    "0401 Uvod u Content Marketing",
+                    "0402 Avatar Kupca",
+                    "0403 Cilj iza Cilja",
+                    "0404 Benefiti i \"Pa Šta\" test",
+                    "0405 USP - Jedinstveni ugao celog brenda",
+                    "0406 Primer reklame sa scenarijem - žvake",
+                    "0407 Najčešće greške kod USP-a",
+                    "0408 Slogani - loša ili dobra ideja?",
+                    "0409 Druže, jesi li dobro? Najvažniji test u pisanju za marketing",
+                    "0410 Pisanje opisa proizvoda - najvažnija lekcija OBAVEZNO GLEDAJ",
+                    "0411 Stare reklame: odavde ćete naučiti mnogo",
+                    "0412 Proxy native landing stranice",
+                    "0413 Pisanje za Google: primer Montažne kuće, tekst koji se rankirao prvi",
+                    "0414 Pisanje liste",
+                    "0415 Landing stranica u Elementoru - ceo tutorijal",
+                    "0416 Content Strategija",
+                    "0417 Content Marketing Plan",
+                    "0418 Kreiranje scenarija iz knjiga i podcasta",
+                    "0419 Puškice za pisanje"
+                ]
+            },
+            {
+                module: "MODUL: 0500 VIDEO MARKETING",
+                lessons: [
+                    "0501 Filmski Jezik",
+                    "0502 Vrste kadrova u filmskom jeziku",
+                    "0503 Primer: Stanić, scenario i režija, Istok",
+                    "0504 Kreiranje video reklame B Card",
+                    "0505 CapCut montaža kompletan vodič",
+                    "0506 Scenario za video i linija pažnje",
+                    "0507 Primer: How2Fit",
+                    "0508 Primer: Nutanix režija, Istok",
+                    "0509 Longform video",
+                    "0510 Snimanje sebe za lični brend",
+                    "0511 Video Content Marketing Plan",
+                    "0512 Palac Stoper u videu",
+                    "0513 Početak koji zaustavlja skrol",
+                    "0514 Skrolovanje feeda",
+                    "0515 Scenario - primer stomatološke usluge",
+                    "0516 Osnovni princip montaže",
+                    "0517 Adobe Premiere tutorial",
+                    "0518 Green Screen produkcija",
+                    "0519 Kolor korekcija, grading i LUT-ovi",
+                    "0520 Prirodni pokreti koji prijaju oku: Motion Graphics i Easing"
+                ]
+            },
+            {
+                module: "MODUL: 0600 OSNOVE DIGITALNOG MARKETINGA",
+                lessons: [
+                    "0601 Prodajni levak - uvod",
+                    "0602 Prodajni levak za online kupovinu",
+                    "0603 Prodajni levak za generisanje leadova",
+                    "0604 Retargeting Levak",
+                    "0605 Ulazak u levak - namera i prekid",
+                    "0606 Organski i plaćeni saobraćaj",
+                    "0607 Hladan, Topli i Vrući saobraćaj",
+                    "0608 Voće sa niskih grana",
+                    "0609 Debug Kampanja",
+                    "0610 Lestvica vrednosti",
+                    "0611 Emocionalna lestvica vrednosti",
+                    "0612 Lead magnet",
+                    "0613 Najćešće greške u marketingu",
+                    "0614 Love Organic Studija Slučaja",
+                    "0615 Strongman studija slučaja",
+                    "0616 Zamurović studija slučaja",
+                    "0617 Kupujem prodajem levak",
+                    "0618 Content marketing levak",
+                    "0619 Shortform video levak",
+                    "0620 Longform video levak"
+                ]
+            },
+            {
+                module: "MODUL: 0700 DIZAJN I ESTETIKA",
+                lessons: [
+                    "0701 Šta nije dizajn",
+                    "0702 Pet univerzalnih vrednosti dizajna",
+                    "0703 Kontrast i jukstapozicija",
+                    "0704 Ponavljanje i konzistencija",
+                    "0705 Ravnanje",
+                    "0706 Blizina i proximity",
+                    "0707 Prazan prostor",
+                    "0708 Tekst preko slike i videa - sublimacija",
+                    "0709 Tipografija - uvod",
+                    "0710 Tipografija - izbor fonta",
+                    "0711 Tipografija i estetika uklapanja",
+                    "0712 Estetika teksta preko slike",
+                    "0713 Principi dizajna u primerima",
+                    "0714 Psihologija boja",
+                    "0715 Primena principa dizajna - vežba",
+                    "0716 Photoshop za marketing"
+                ]
+            },
+            {
+                module: "MODUL: 0800 FOTOGRAFISANJE PROIZVODA",
+                lessons: [
+                    "0801 Fotografisanje proizvoda"
+                ]
+            },
+            {
+                module: "MODUL: 0900 BREND I VIZUELNI IDENTITET",
+                lessons: [
+                    "0901 Šta je brend",
+                    "0902 Pozicioniranje brenda",
+                    "0903 Šta sve može biti brend",
+                    "0904 Brend vs Robna marka",
+                    "0905 Histerezis poverenja i izdaje",
+                    "0906 Analiza brendova na terenu",
+                    "0907 Co Branding",
+                    "0908 Kako se gradi brend",
+                    "0909 Kreiranje imena brenda",
+                    "0910 Vizuelni identitet",
+                    "0911 Logo brenda"
+                ]
+            },
+            {
+                module: "MODUL: 1000 FOTOGRAFIJA U MARKETINGU",
+                lessons: [
+                    "1001 Svetlo",
+                    "1002 Kontekst",
+                    "1003 Kamera",
+                    "1004 Boje",
+                    "1005 Editovanje boja",
+                    "1006 Napredno editovanje",
+                    "1007 Scouting lokacije"
+                ]
+            },
+            {
+                module: "MODUL: 1100 EMAIL MARKETING",
+                lessons: [
+                    "1101 Uvod u Email marketing",
+                    "1102 Alati za email marketing",
+                    "1103 Kako da email stigne u primarni Inbox",
+                    "1104 Kako da ljudi otvor email - subject kao hook",
+                    "1105 Trigerovanje odgovora i strategija prvog maila",
+                    "1106 Telo maila",
+                    "1107 Kako se koriste email alati",
+                    "1108 GDPR",
+                    "1109 Sekvence i drip kampanje"
+                ]
+            },
+            {
+                module: "MODUL: 1200 SEO",
+                lessons: [
+                    "1201 Uvod u SEO",
+                    "1202 Faktori rankiranja",
+                    "1203 Istraživanje ključnih reči",
+                    "1204 Content strategija za SEO",
+                    "1205 Backlinkovi",
+                    "1206 SEO i Retargeting",
+                    "1207 Brzina sajta",
+                    "1208 SEO za online shop",
+                    "1209 SEO za usluge",
+                    "1210 SEO za Google mape",
+                    "1211 Kreiranje SEO authority sajta"
+                ]
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('checklistContainer');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const resetBtn = document.getElementById('resetBtn');
+            const STORAGE_KEY = 'masterbox_2026_progress';
+
+            let totalLessons = 0;
+            let checkedLessons = 0;
+
+            // Učitavanje memorisanog stanja iz localStorage
+            const savedState = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+
+            // Renderovanje HTML strukture iz baze podataka
+            courseData.forEach((mod, moduleIndex) => {
+                // Kreiraj div za Modul
+                const moduleDiv = document.createElement('div');
+                moduleDiv.className = 'module';
+                
+                // Naslov modula
+                const moduleTitle = document.createElement('h2');
+                moduleTitle.className = 'module-title';
+                moduleTitle.textContent = mod.module;
+                moduleDiv.appendChild(moduleTitle);
+
+                // Lista lekcija
+                const lessonList = document.createElement('ul');
+                lessonList.className = 'lesson-list';
+
+                mod.lessons.forEach((lessonName, lessonIndex) => {
+                    totalLessons++;
+                    const lessonId = `lesson-${moduleIndex}-${lessonIndex}`;
+                    const isChecked = savedState[lessonId] === true;
+
+                    if (isChecked) {
+                        checkedLessons++;
+                    }
+
+                    const li = document.createElement('li');
+                    li.className = 'lesson-item';
+
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = lessonId;
+                    checkbox.className = 'lesson-checkbox';
+                    checkbox.checked = isChecked;
+
+                    const label = document.createElement('label');
+                    label.htmlFor = lessonId;
+                    label.className = 'lesson-label';
+                    label.textContent = lessonName;
+
+                    // Event listener za ažuriranje stanja i progres bara
+                    checkbox.addEventListener('change', (e) => {
+                        const checked = e.target.checked;
+                        
+                        // Ažuriraj stanje u memoriji
+                        savedState[lessonId] = checked;
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(savedState));
+
+                        // Ažuriraj brojčanik
+                        checkedLessons += checked ? 1 : -1;
+                        updateProgress();
+                    });
+
+                    li.appendChild(checkbox);
+                    li.appendChild(label);
+                    lessonList.appendChild(li);
+                });
+
+                moduleDiv.appendChild(lessonList);
+                container.appendChild(moduleDiv);
+            });
+
+            // Funkcija za osvežavanje progres bara
+            function updateProgress() {
+                const percentage = totalLessons === 0 ? 0 : Math.round((checkedLessons / totalLessons) * 100);
+                progressBar.style.width = `${percentage}%`;
+                progressText.textContent = `${percentage}% (${checkedLessons}/${totalLessons})`;
+
+                // Menjanje boje progres bara ako je 100%
+                if(percentage === 100) {
+                    progressBar.style.backgroundColor = '#0d6efd'; // Plava boja kad se završi sve
+                    progressText.style.color = '#0d6efd';
+                    progressText.textContent = `100% - ČESTITAMO! SVE JE ZAVRŠENO! (${checkedLessons}/${totalLessons})`;
+                } else {
+                    progressBar.style.backgroundColor = 'var(--success-color)';
+                    progressText.style.color = 'var(--success-color)';
+                }
+            }
+
+            // Prikaz početnog progresa pri učitavanju
+            updateProgress();
+
+            // Funkcionalnost za dugme Reset
+            resetBtn.addEventListener('click', () => {
+                const confirmReset = confirm("Da li ste sigurni da želite da resetujete sav napredak?\nOva akcija će obrisati sve vaše kvačice i vratiti progres na 0%.");
+                
+                if (confirmReset) {
+                    // Očisti localStorage
+                    localStorage.removeItem(STORAGE_KEY);
+                    
+                    // Očisti memorijski objekat
+                    for (let key in savedState) {
+                        delete savedState[key];
+                    }
+
+                    // Odčekiraj sve vizuelno
+                    document.querySelectorAll('.lesson-checkbox').forEach(cb => {
+                        cb.checked = false;
+                    });
+
+                    // Resetuj brojčanik
+                    checkedLessons = 0;
+                    updateProgress();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
